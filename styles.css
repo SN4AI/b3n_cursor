@@ -6,6 +6,7 @@
     --text-color: #333;
     --light-bg: #f5f6fa;
     --white: #ffffff;
+    --logo-color: #2c3e50; /* Couleur harmonisée avec le logo */
 }
 
 /* Reset et styles de base */
@@ -35,27 +36,48 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
+    padding: 1rem 2rem;
+    background-color: var(--white);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .logo {
-    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    min-width: 300px;
+}
+
+.logo-content {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.logo-img {
+    height: 100px;
+    width: auto;
+    margin-right: 20px;
 }
 
 .logo h1 {
-    font-size: 2rem;
-    margin-bottom: 0.2rem;
+    font-size: 3rem;
+    margin: 0;
+    color: var(--logo-color);
 }
 
 .logo p {
-    font-size: 0.8rem;
+    font-size: 1.1rem;
+    color: var(--logo-color);
+    margin: 0;
 }
 
 .nav-links {
     display: flex;
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-links li {
@@ -63,10 +85,11 @@ nav {
 }
 
 .nav-links a {
-    color: var(--white);
+    color: var(--logo-color);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
+    padding: 0.5rem 0;
 }
 
 .nav-links a:hover {
@@ -75,6 +98,8 @@ nav {
 
 .nav-links a.active {
     color: var(--secondary-color);
+    font-weight: bold;
+    border-bottom: 2px solid var(--secondary-color);
 }
 
 /* Burger Menu */
@@ -93,21 +118,60 @@ nav {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/library-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
+    background-color: var(--primary-color);
+    min-height: 60vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: var(--white);
     margin-top: 80px;
+    position: relative;
+    padding: 4rem 2rem;
+}
+
+.hero-image {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .hero-content h1 {
-    font-size: 3rem;
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--white);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    line-height: 1.2;
+}
+
+.hero-content .subtitle {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    color: var(--white);
+    line-height: 1.4;
+    font-style: italic;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: var(--white);
     margin-bottom: 1rem;
+    opacity: 0.9;
 }
 
 /* Hommage Section */
@@ -118,8 +182,9 @@ nav {
 
 .hommage h2 {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     color: var(--primary-color);
+    font-size: 2.2rem;
 }
 
 .hommage-content {
@@ -127,17 +192,63 @@ nav {
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: 2rem;
+    gap: 3rem;
 }
 
 .portrait img {
     width: 100%;
-    border-radius: 10px;
+    max-width: 400px;
+    height: auto;
+    border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.biographie p {
+.biographie-section {
+    margin-bottom: 2.5rem;
+    position: relative;
+    padding-left: 3rem;
+}
+
+.biographie-section i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.biographie-section h3 {
+    color: var(--primary-color);
     margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+
+.biographie-section p {
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.citation {
+    margin-top: 3rem;
+    padding: 2rem;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+}
+
+.citation i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.citation p {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--primary-color);
 }
 
 /* Mission Section */
@@ -222,8 +333,41 @@ footer {
         grid-template-columns: 1fr;
     }
 
+    .hero {
+        padding: 3rem 1rem;
+    }
+
+    .hero-image {
+        max-width: 150px;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-content {
+        padding: 2rem;
+    }
+
     .hero-content h1 {
         font-size: 2rem;
+    }
+
+    .hero-content .subtitle {
+        font-size: 1.2rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .portrait {
+        text-align: center;
+    }
+    
+    .biographie-section {
+        padding-left: 2.5rem;
+    }
+    
+    .biographie-section i {
+        font-size: 1.5rem;
     }
 }
 
@@ -240,5 +384,57 @@ footer {
     to {
         opacity: 1;
         transform: translateX(0px);
+    }
+}
+
+.beginning-banner {
+    width: 100%;
+    background-color: var(--primary-color);
+    padding: 2rem 0;
+    text-align: center;
+    margin-top: 80px;
+}
+
+.beginning-image {
+    max-width: 300px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+}
+
+@media screen and (max-width: 768px) {
+    .beginning-banner {
+        padding: 1.5rem 0;
+    }
+
+    .beginning-image {
+        max-width: 200px;
+    }
+}
+
+.ending-banner {
+    width: 100%;
+    background-color: var(--light-bg);
+    padding: 6rem 0;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.ending-image {
+    max-width: 1200px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+}
+
+@media screen and (max-width: 768px) {
+    .ending-banner {
+        padding: 4rem 0;
+    }
+
+    .ending-image {
+        max-width: 900px;
     }
 } 

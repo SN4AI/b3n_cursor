@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliothèque - B3N</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .categories {
+            padding: 4rem 2rem;
+            background-color: var(--light-bg);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .category-card p {
+            margin-bottom: 1.5rem;
+        }
+
+        .category-link {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .category-link:hover {
+            background-color: var(--primary-color);
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>B3N</h1>
+                <p>Bibliothèque Numérique Ndiaga NDIAYE</p>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="bibliotheque.html" class="active">Bibliothèque</a></li>
+                <li><a href="projet-xam-xamle.html">Projet XAM XAMLÉ</a></li>
+                <li><a href="a-propos.html">À Propos</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Notre Bibliothèque</h1>
+                <p>Explorez nos différentes catégories de ressources</p>
+            </div>
+        </section>
+
+        <section class="categories">
+            <div class="categories-grid">
+                <div class="category-card">
+                    <i class="fas fa-book category-icon"></i>
+                    <h3>Littérature Africaine</h3>
+                    <p>Découvrez une sélection d'œuvres littéraires africaines.</p>
+                    <a href="https://drive.google.com/drive/folders/1eEaWEDTZPE-k3OVoKF6pbXdIX0wj9RSi?usp=sharing" class="category-link" target="_blank">Accéder</a>
+                </div>
+
+                <div class="category-card">
+                    <i class="fas fa-laptop-code category-icon"></i>
+                    <h3>Informatique - Codage</h3>
+                    <p>Ressources pour apprendre la programmation et l'informatique.</p>
+                    <a href="https://drive.google.com/drive/folders/1Xc-QFtl2gc3TL-12sinBo0p6BZ6S0P77?usp=sharing" class="category-link" target="_blank">Accéder</a>
+                </div>
+
+                <div class="category-card">
+                    <i class="fas fa-briefcase category-icon"></i>
+                    <h3>Développer son Business</h3>
+                    <p>Guides et ressources pour entrepreneurs.</p>
+                    <a href="https://drive.google.com/drive/folders/1V46N0uAWqispJHw2Y8HPwYyvVXR6kxAJ?usp=sharing" class="category-link" target="_blank">Accéder</a>
+                </div>
+
+                <div class="category-card">
+                    <i class="fas fa-user-graduate category-icon"></i>
+                    <h3>Développement Personnel</h3>
+                    <p>Ressources pour votre épanouissement personnel.</p>
+                    <a href="https://drive.google.com/drive/folders/1LEDW51TrV3HaNyO4FrbPioRWjfiLStYd?usp=sharing" class="category-link" target="_blank">Accéder</a>
+                </div>
+
+                <div class="category-card">
+                    <i class="fas fa-trophy category-icon"></i>
+                    <h3>Concours</h3>
+                    <p>Préparez-vous aux différents concours.</p>
+                    <a href="https://drive.google.com/drive/folders/1835xNcbEuJravaxKwYV_hNSZ3H-PtPTE?usp=sharing" class="category-link" target="_blank">Accéder</a>
+                </div>
+
+                <div class="category-card">
+                    <i class="fas fa-microphone category-icon"></i>
+                    <h3>Bien Parler en Public</h3>
+                    <p>Améliorez vos compétences en communication.</p>
+                    <a href="https://drive.google.com/drive/folders/10ol8hkLvqltgbcXXZ6pYDcgwl5Cl-hbm?usp=sharing" class="category-link" target="_blank">Accéder</a>
+                </div>
+
+                <div class="category-card">
+                    <i class="fas fa-seedling category-icon"></i>
+                    <h3>Agriculture</h3>
+                    <p>Ressources sur les techniques agricoles modernes.</p>
+                    <a href="https://drive.google.com/drive/folders/14KlzhHz6k2CyBTMwc7501eP0o2T9DDxy?usp=sharing" class="category-link" target="_blank">Accéder</a>
+                </div>
+
+                <div class="category-card">
+                    <i class="fas fa-ellipsis-h category-icon"></i>
+                    <h3>Autres</h3>
+                    <p>Diverses ressources complémentaires.</p>
+                    <a href="https://drive.google.com/drive/folders/150EdP_f3aKJTw5d7jb3-aVsnpGOKylBn?usp=sharing" class="category-link" target="_blank">Accéder</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="ending-banner">
+            <img src="images/beging.png" alt="Beging" class="ending-image">
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Partenaires</h3>
+                <p>JPS OUAKAM</p>
+                <p>Association AABIS</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: contact@b3n.sn</p>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Bibliothèque Numérique Ndiaga NDIAYE - B3N. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
