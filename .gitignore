@@ -1,29 +1,33 @@
-# Dependencies
-node_modules/
-npm-debug.log
-yarn-debug.log
-yarn-error.log
-
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# OS
+# Fichiers système
 .DS_Store
 Thumbs.db
 
-# Build
+# Fichiers d'éditeur
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Fichiers de dépendances
+node_modules/
+package-lock.json
+
+# Fichiers de build
 dist/
 build/
+
+# Fichiers de cache
+.cache/
+.temp/
+
+# Fichiers de logs
+*.log
+npm-debug.log*
+
+# Fichiers d'environnement
+.env
+.env.local
+.env.*.local
 
 # Fichiers temporaires
 *.tmp
@@ -33,6 +37,6 @@ build/
 # Fichiers de dépendances
 bower_components/
 
-# Fichiers de cache
-.cache/
-.temp/ 
+# Fichiers de logs
+yarn-debug.log
+yarn-error.log 
