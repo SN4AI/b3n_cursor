@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À Propos - B3N</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .about-section {
+            padding: 4rem 2rem;
+            background-color: var(--light-bg);
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .about-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .partners {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .partner-logos {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .partner-logo {
+            width: 150px;
+            height: auto;
+        }
+
+        @media screen and (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .partner-logos {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>B3N</h1>
+                <p>Bibliothèque Numérique Ndiaga NDIAYE</p>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="bibliotheque.html">Bibliothèque</a></li>
+                <li><a href="projet-xam-xamle.html">Projet XAM XAMLÉ</a></li>
+                <li><a href="a-propos.html" class="active">À Propos</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>À Propos de B3N</h1>
+                <p>Notre mission et notre vision</p>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <div class="about-content">
+                <h2>Notre Histoire</h2>
+                <p>La Bibliothèque Numérique Ndiaga NDIAYE (B3N) est née d'une collaboration entre la JPS OUAKAM et l'association AABIS, avec pour objectif de rendre le savoir accessible à tous. Notre initiative s'inscrit dans la continuité de l'œuvre du Professeur Ndiaga NDIAYE, qui a consacré sa vie à l'éducation et au développement de sa communauté.</p>
+
+                <div class="about-grid">
+                    <div class="about-card">
+                        <h3>Notre Mission</h3>
+                        <p>Promouvoir l'accès au savoir et à l'éducation pour tous, en particulier dans les domaines scientifiques (Mathématiques, Physique-Chimie et Sciences de la Vie et de la Terre). Nous nous engageons à fournir des ressources éducatives de qualité, accessibles gratuitement à tous les apprenants.</p>
+                    </div>
+
+                    <div class="about-card">
+                        <h3>Notre Vision</h3>
+                        <p>Devenir une référence en matière de bibliothèque numérique en Afrique, en contribuant activement au développement de l'éducation et en favorisant l'émergence d'une nouvelle génération de leaders éclairés et compétents.</p>
+                    </div>
+                </div>
+
+                <div class="partners">
+                    <h2>Nos Partenaires</h2>
+                    <div class="partner-logos">
+                        <img src="images/jps-logo.png" alt="JPS OUAKAM" class="partner-logo">
+                        <img src="images/aabis-logo.png" alt="Association AABIS" class="partner-logo">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Partenaires</h3>
+                <p>JPS OUAKAM</p>
+                <p>Association AABIS</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: contact@b3n.sn</p>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Bibliothèque Numérique Ndiaga NDIAYE - B3N. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 

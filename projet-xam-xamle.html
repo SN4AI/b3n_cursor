@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet XAM XAMLÉ - B3N</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .project-section {
+            padding: 4rem 2rem;
+            background-color: var(--light-bg);
+        }
+
+        .project-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .project-features {
+            margin-top: 3rem;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        @media screen and (max-width: 768px) {
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>B3N</h1>
+                <p>Bibliothèque Numérique Ndiaga NDIAYE</p>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="bibliotheque.html">Bibliothèque</a></li>
+                <li><a href="projet-xam-xamle.html" class="active">Projet XAM XAMLÉ</a></li>
+                <li><a href="a-propos.html">À Propos</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Projet XAM XAMLÉ</h1>
+                <p>Promouvoir l'excellence dans les disciplines scientifiques</p>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <div class="project-content">
+                <h2>Qu'est-ce que le Projet XAM XAMLÉ ?</h2>
+                <p>Le Projet XAM XAMLÉ est une initiative éducative visant à promouvoir l'excellence dans les disciplines scientifiques, notamment les Mathématiques, la Physique-Chimie et les Sciences de la Vie et de la Terre. Ce projet s'inscrit dans la continuité de l'œuvre du Professeur Ndiaga NDIAYE et s'appuie sur la collaboration entre la JPS OUAKAM et l'association AABIS.</p>
+
+                <div class="project-grid">
+                    <div class="project-card">
+                        <h3>Objectifs</h3>
+                        <ul>
+                            <li>Renforcer les compétences des élèves en sciences</li>
+                            <li>Encourager la recherche scientifique</li>
+                            <li>Faciliter l'accès aux ressources pédagogiques</li>
+                            <li>Promouvoir l'excellence académique</li>
+                            <li>Développer l'esprit critique et analytique</li>
+                        </ul>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>Moyens d'Action</h3>
+                        <ul>
+                            <li>Organisation d'ateliers scientifiques</li>
+                            <li>Mise à disposition de ressources pédagogiques</li>
+                            <li>Encadrement personnalisé des élèves</li>
+                            <li>Collaboration avec les établissements scolaires</li>
+                            <li>Organisation de compétitions scientifiques</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project-features">
+                    <h2>Nos Points Forts</h2>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <i class="fas fa-flask feature-icon"></i>
+                            <h3>Laboratoires Virtuels</h3>
+                            <p>Accès à des expériences scientifiques en ligne</p>
+                        </div>
+
+                        <div class="feature-item">
+                            <i class="fas fa-book-open feature-icon"></i>
+                            <h3>Ressources Pédagogiques</h3>
+                            <p>Bibliothèque de documents scientifiques</p>
+                        </div>
+
+                        <div class="feature-item">
+                            <i class="fas fa-users feature-icon"></i>
+                            <h3>Communauté Active</h3>
+                            <p>Échange et partage entre apprenants</p>
+                        </div>
+
+                        <div class="feature-item">
+                            <i class="fas fa-trophy feature-icon"></i>
+                            <h3>Compétitions</h3>
+                            <p>Organisation de concours scientifiques</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Partenaires</h3>
+                <p>JPS OUAKAM</p>
+                <p>Association AABIS</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: contact@b3n.sn</p>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Bibliothèque Numérique Ndiaga NDIAYE - B3N. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
