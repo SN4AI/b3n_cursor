@@ -1,38 +1,36 @@
-# Bibliothèque Numérique Ndiaga NDIAYE (B3N)
+# Bibliothèque Numérique Ndiaga NDIAYE - B3N
 
-La Bibliothèque Numérique Ndiaga NDIAYE (B3N) est une initiative de la JPS OUAKAM et l'association AABIS, dédiée à la mémoire du Professeur Ndiaga NDIAYE, éminent enseignant au Département de Gestion de l'École Supérieure Polytechnique (ESP) de Dakar.
+La Bibliothèque Numérique Ndiaga NDIAYE (B3N) est une initiative visant à promouvoir l'éducation et le développement des disciplines scientifiques à travers un accès libre et gratuit aux ressources pédagogiques.
 
-## Objectif
+## À Propos
 
-Le projet vise à promouvoir l'éducation et le développement des disciplines scientifiques (Mathématiques, Physique-Chimie et Sciences de la Vie et de la Terre) à travers un accès libre et gratuit aux ressources pédagogiques.
+B3N est un hommage au Professeur Ndiaga NDIAYE (1960-2024), pédagogue visionnaire et maître de conférences émérite à l'École Supérieure Polytechnique de Dakar. Cette bibliothèque numérique incarne son credo : "Le savoir ne vaut que partagé, l'éducation est l'arme absolue contre la pauvreté."
 
-## Technologies utilisées
+## Objectifs
 
-- HTML5
-- CSS3
-- JavaScript
-- Font Awesome pour les icônes
+- Fournir un accès libre et gratuit à des ressources pédagogiques de qualité
+- Créer une communauté d'apprentissage dynamique
+- Promouvoir l'excellence dans les disciplines scientifiques
+- Perpétuer l'héritage intellectuel du Professeur Ndiaga NDIAYE
 
-## Installation
+## Contenu
 
-1. Clonez le dépôt
-```bash
-git clone [URL_DU_DEPOT]
-```
+- Mathématiques
+- Physique-Chimie
+- Sciences de la Vie et de la Terre
+- Ressources pédagogiques interactives
 
-2. Ouvrez le fichier `index.html` dans votre navigateur
+## Partenaires
 
-## Structure du projet
-
-- `index.html` - Page d'accueil
-- `styles.css` - Feuille de style principale
-- `script.js` - Scripts JavaScript
-- `images/` - Dossier contenant les images du site
+- JPS OUAKAM
+- Association AABIS
+- École Supérieure Polytechnique de Dakar
 
 ## Contact
 
-Email: contact@b3n.sn
+- Email: contact@b3n.sn
+- Adresse: Ouakam, Dakar, Sénégal
 
 ## Licence
 
-© 2024 Bibliothèque Numérique Ndiaga NDIAYE - B3N. Tous droits réservés. 
+Ce projet est sous licence [MIT](LICENSE). 
