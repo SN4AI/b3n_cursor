@@ -4,16 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bibliothèque Numérique Ndiaga NDIAYE - B3N</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- Optimisation SEO -->
+    <meta name="description" content="Bibliothèque Numérique Ndiaga NDIAYE - B3N : Perpétuer la lumière du savoir, honorer la vision d'un éducateur hors pair">
+    <meta name="keywords" content="bibliothèque numérique, Ndiaga NDIAYE, Ouakam, éducation, Sénégal, JPS OUAKAM, AABIS">
+    <meta name="author" content="JPS OUAKAM">
+    <!-- Préchargement des ressources critiques -->
+    <link rel="preload" href="styles.min.css" as="style">
+    <link rel="preload" href="animations.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <!-- PWA support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c3e50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="B3N">
+    <link rel="apple-touch-icon" href="images/icon-192x192.png">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.min.css">
+    <link rel="stylesheet" href="animations.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="images/logo.png" type="image/png">
+    <!-- Open Graph pour les réseaux sociaux -->
+    <meta property="og:title" content="Bibliothèque Numérique Ndiaga NDIAYE - B3N">
+    <meta property="og:description" content="Perpétuer la lumière du savoir, honorer la vision d'un éducateur hors pair.">
+    <meta property="og:image" content="images/logo.png">
+    <meta property="og:url" content="https://b3n.sn">
+    <meta property="og:type" content="website">
 </head>
 <body>
+    <!-- Animation de chargement de page -->
+    <div class="page-transition">
+        <div class="loader"></div>
+    </div>
+
     <header>
         <nav>
             <div class="logo">
                 <div class="logo-content">
-                    <img src="images/logo.png" alt="Logo B3N" class="logo-img">
+                    <img src="images/logo.png" alt="Logo B3N" class="logo-img" width="60" height="60">
                     <h1>B3N</h1>
                 </div>
                 <p>Bibliothèque Numérique Ndiaga NDIAYE</p>
@@ -41,11 +71,11 @@
             </div>
         </section>
 
-        <section class="hommage">
+        <section id="hommage" class="hommage section-animate">
             <h2>Hommage au Professeur Ndiaga NDIAYE (1960-2024)</h2>
             <div class="hommage-content">
                 <div class="portrait">
-                    <img src="images/Ndiaga NDIAYE ESP 2.jpg" alt="Professeur Ndiaga NDIAYE">
+                    <img src="images/Ndiaga NDIAYE ESP 2.jpg" alt="Professeur Ndiaga NDIAYE" loading="lazy" width="400" height="auto">
                 </div>
                 <div class="biographie">
                     <div class="biographie-section">
@@ -80,7 +110,7 @@
             </div>
         </section>
 
-        <section class="mission">
+        <section id="mission" class="mission section-animate">
             <h2>Notre Mission</h2>
             <div class="mission-content">
                 <div class="mission-item">
@@ -101,7 +131,7 @@
             </div>
         </section>
 
-        <section class="actualites">
+        <section id="actualites" class="actualites section-animate">
             <h2>Actualités</h2>
             <div class="actualites-content">
                 <div class="actualite-card">
@@ -117,7 +147,7 @@
             </div>
         </section>
 
-        <section class="ressources">
+        <section id="ressources" class="ressources section-animate">
             <h2>Nos Ressources</h2>
             <div class="ressources-content">
                 <div class="ressource-categorie">
@@ -150,7 +180,7 @@
             <div class="footer-section">
                 <h3>Contact</h3>
                 <p><i class="fas fa-envelope"></i> Email: jpsouakam@gmail.com</p>
-                <p><i class="fas fa-phone"></i> Téléphone: +221 76 145 96 87 / 77 201 00 15</p>
+                <p><i class="fas fa-phone"></i> Téléphone: +221 76 145 96 87 | +221 77 201 00 15</p>
                 <p><i class="fas fa-map-marker-alt"></i> Adresse: Ouakam, Dakar, Sénégal</p>
             </div>
             <div class="footer-section">
@@ -178,6 +208,25 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Bouton retour en haut -->
+    <div id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script src="script.js" defer></script>
+    <script>
+        // Enregistrement du service worker pour le support PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker enregistré avec succès:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Échec d\'enregistrement du ServiceWorker:', error);
+                    });
+            });
+        }
+    </script>
 </body>
 </html> 

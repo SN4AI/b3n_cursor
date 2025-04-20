@@ -4,7 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projet XAM XAMLÉ - B3N</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- Optimisation SEO -->
+    <meta name="description" content="Découvrez le projet XAM XAMLÉ de la Bibliothèque Numérique Ndiaga NDIAYE - B3N : une initiative éducative pour promouvoir l'excellence scientifique.">
+    <meta name="keywords" content="XAM XAMLÉ, éducation scientifique, mathématiques, physique-chimie, SVT, Ndiaga NDIAYE, Ouakam, éducation, Sénégal, JPS OUAKAM">
+    <!-- Préchargement des ressources critiques -->
+    <link rel="preload" href="styles.min.css" as="style">
+    <link rel="preload" href="animations.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <!-- PWA support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c3e50">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.min.css">
+    <link rel="stylesheet" href="animations.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .project-section {
@@ -15,6 +29,100 @@
         .project-content {
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        /* Style pour réduire la taille de l'image d'accueil */
+        .welcome-image-container {
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            overflow: hidden; /* Pour contenir l'effet de zoom */
+        }
+
+        .welcome-image {
+            max-height: 500px;
+            object-fit: contain;
+            width: auto;
+            margin: 0 auto;
+            animation: zoomEffect 10s infinite alternate;
+        }
+
+        @keyframes zoomEffect {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-logo {
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s var(--transition-function);
+        }
+
+        .project-header:hover .project-logo {
+            transform: scale(1.05) rotate(3deg);
+        }
+
+        .project-subtitle {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .project-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            color: var(--text-color);
+            text-align: justify;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .objective-section {
+            background-color: var(--white);
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .objective-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 7px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--secondary-color), var(--accent-color));
+        }
+
+        .objective-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .objective-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+            text-align: justify;
         }
 
         .project-grid {
@@ -29,11 +137,41 @@
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s var(--transition-function);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
         .project-card h3 {
             color: var(--primary-color);
             margin-bottom: 1rem;
+            transition: color 0.3s var(--transition-function);
+        }
+
+        .project-card:hover h3 {
+            color: var(--secondary-color);
+        }
+
+        .project-card ul {
+            padding-left: 1.5rem;
+        }
+
+        .project-card li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 0.5rem;
+        }
+
+        .project-card li::before {
+            content: "•";
+            color: var(--secondary-color);
+            font-weight: bold;
+            display: inline-block; 
+            width: 1em;
+            margin-left: -1em;
         }
 
         .project-features {
@@ -53,31 +191,110 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             text-align: center;
+            transition: all 0.5s var(--transition-function);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
         .feature-icon {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--secondary-color);
             margin-bottom: 1rem;
+            transition: transform 0.5s var(--transition-function), 
+                        color 0.5s var(--transition-function);
+        }
+
+        .feature-item:hover .feature-icon {
+            transform: scale(1.2) rotate(5deg);
+            color: var(--accent-color);
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 3rem;
+            border-radius: 10px;
+            margin-top: 4rem;
+            text-align: center;
+            color: var(--white);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-section h2 {
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .cta-section p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--primary-color);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s var(--transition-function);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-size: 1.1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            background-color: var(--accent-color);
+            color: var(--white);
         }
 
         @media screen and (max-width: 768px) {
             .project-grid {
                 grid-template-columns: 1fr;
             }
+
+            .project-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .objective-section {
+                padding: 1.5rem;
+            }
+
+            .cta-section {
+                padding: 2rem 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Animation de chargement de page -->
+    <div class="page-transition">
+        <div class="loader"></div>
+    </div>
+
     <header>
         <nav>
             <div class="logo">
-                <h1>B3N</h1>
+                <div class="logo-content">
+                    <img src="images/logo.png" alt="Logo B3N" class="logo-img" width="60" height="60">
+                    <h1>B3N</h1>
+                </div>
                 <p>Bibliothèque Numérique Ndiaga NDIAYE</p>
             </div>
             <ul class="nav-links">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="bibliotheque.html">Bibliothèque</a></li>
+                <li><a href="galerie.html">Galerie</a></li>
                 <li><a href="projet-xam-xamle.html" class="active">Projet XAM XAMLÉ</a></li>
                 <li><a href="a-propos.html">À Propos</a></li>
             </ul>
@@ -93,35 +310,52 @@
         <section class="hero">
             <div class="hero-content">
                 <h1>Projet XAM XAMLÉ</h1>
-                <p>Savoir et Partage : Promouvoir l'excellence dans les disciplines scientifiques</p>
+                <p class="subtitle">SPPE : Savoir, Partager et Promouvoir l'Excellence dans les disciplines scientifiques</p>
             </div>
         </section>
 
-        <section class="project-section">
+        <!-- Image d'accueil du projet -->
+        <div class="welcome-image-container section-animate">
+            <img src="images/xamxamle 1.PNG" alt="Projet XAM XAMLÉ" class="welcome-image">
+        </div>
+
+        <section class="project-section section-animate">
             <div class="project-content">
-                <h2>Qu'est-ce que le Projet XAM XAMLÉ ?</h2>
-                <p>Le Projet XAM XAMLÉ est une initiative éducative visant à promouvoir l'excellence dans les disciplines scientifiques, notamment les Mathématiques, la Physique-Chimie et les Sciences de la Vie et de la Terre. Ce projet s'inscrit dans la continuité de l'œuvre du Professeur Ndiaga NDIAYE et s'appuie sur la collaboration entre la JPS OUAKAM et l'association AABIS.</p>
+                <div class="project-header">
+                    <img src="images/XAM XAMLE Logo.png" alt="Logo XAM XAMLÉ" class="project-logo">
+                    <div>
+                        <h2>Qu'est-ce que le Projet XAM XAMLÉ ?</h2>
+                        <p class="project-subtitle">Une collaboration AABIS - JPS OUAKAM pour la Promotion des Disciplines Scientifiques</p>
+                    </div>
+                </div>
+
+                <p class="project-description">XAM XAMLÉ est une initiative du mouvement de la Jeunesse Patriotique du Sénégal sis à Ouakam et en l'occurrence, la JPS Ouakam. Ainsi, en collaboration avec l'Association des Amis de la Bibliothèque Issa Samb de Ouakam - AABIS, nous lançons un projet de soutien scolaire et de renforcement des capacités dans les disciplines scientifiques. Il s'agit là, d'un projet dédié aux élèves de niveau moyen et secondaire et particulièrement, ceux en classe d'examen. Et dans le cadre de nos activités, nous agissons à travers des plateformes numériques d'aide à l'apprentissage et au renforcement pédagogique.</p>
+
+                <div class="objective-section section-animate">
+                    <h2>Objectif du Projet</h2>
+                    <p>A travers nos plateformes numériques, ce projet vise à capturer les élèves dans un environnement convivial et purement estudiantin où ces derniers pourront eux-mêmes exprimer leurs besoins ou lacunes et que nos intervenants se feront le plaisir d'y apporter des solutions adaptées. Ces plateformes numériques sont ouvertes à tout élève soucieux d'un avenir radieux si toutefois, il s'engage à respecter les règles de bonnes conduites notées ci-dessus.</p>
+                </div>
 
                 <div class="project-grid">
                     <div class="project-card">
-                        <h3>Objectifs</h3>
+                        <h3>Notre approche</h3>
                         <ul>
-                            <li>Renforcer les compétences des élèves en sciences</li>
-                            <li>Encourager la recherche scientifique</li>
-                            <li>Faciliter l'accès aux ressources pédagogiques</li>
-                            <li>Promouvoir l'excellence académique</li>
-                            <li>Développer l'esprit critique et analytique</li>
+                            <li>Accompagnement personnalisé des élèves</li>
+                            <li>Plateforme numérique interactive</li>
+                            <li>Environnement d'apprentissage convivial</li>
+                            <li>Soutien scolaire adapté aux besoins</li>
+                            <li>Renforcement des capacités scientifiques</li>
                         </ul>
                     </div>
 
                     <div class="project-card">
-                        <h3>Moyens d'Action</h3>
+                        <h3>Public cible</h3>
                         <ul>
-                            <li>Organisation d'ateliers scientifiques</li>
-                            <li>Mise à disposition de ressources pédagogiques</li>
-                            <li>Encadrement personnalisé des élèves</li>
-                            <li>Collaboration avec les établissements scolaires</li>
-                            <li>Organisation de compétitions scientifiques</li>
+                            <li>Élèves du niveau moyen (collège)</li>
+                            <li>Élèves du niveau secondaire (lycée)</li>
+                            <li>Élèves en classes d'examen</li>
+                            <li>Jeunes passionnés par les sciences</li>
+                            <li>Apprenants cherchant à renforcer leurs compétences</li>
                         </ul>
                     </div>
                 </div>
@@ -154,6 +388,12 @@
                         </div>
                     </div>
                 </div>
+                
+                <div class="cta-section section-animate">
+                    <h2>Rejoignez l'Aventure XAM XAMLÉ</h2>
+                    <p>Vous êtes élève ou enseignant ? Vous souhaitez participer à cette initiative éducative innovante ? N'hésitez pas à nous contacter pour plus d'informations.</p>
+                    <a href="#" class="cta-button">Rejoindre le programme</a>
+                </div>
             </div>
         </section>
     </main>
@@ -164,25 +404,38 @@
                 <h3>Partenaires</h3>
                 <p>JPS OUAKAM</p>
                 <p>Association AABIS</p>
+                <p>Bibliothèque Issa Samb de Ouakam</p>
             </div>
             <div class="footer-section">
                 <h3>Contact</h3>
-                <p>Email: contact@b3n.sn</p>
+                <p><i class="fas fa-envelope"></i> Email: jpsouakam@gmail.com</p>
+                <p><i class="fas fa-phone"></i> Téléphone: +221 76 145 96 87 | +221 77 201 00 15</p>
+                <p><i class="fas fa-map-marker-alt"></i> Adresse: Ouakam, Dakar, Sénégal</p>
             </div>
             <div class="footer-section">
                 <h3>Suivez-nous</h3>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                <div class="social-follow">
+                    <a href="https://www.facebook.com/profile.php?id=61570152758917&sk=about" target="_blank" class="social-link">
+                        <i class="fab fa-facebook"></i>
+                        <span>Suivez-nous sur Facebook</span>
+                    </a>
+                    <a href="https://www.youtube.com/@jpsouakam" target="_blank" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                        <span>Suivez-nous sur YouTube</span>
+                    </a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 Bibliothèque Numérique Ndiaga NDIAYE - B3N. Tous droits réservés.</p>
+            <p>&copy; 2025 Bibliothèque Numérique Ndiaga NDIAYE - B3N. Tous droits réservés.</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Bouton retour en haut -->
+    <div id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script src="script.js" defer></script>
 </body>
 </html> 

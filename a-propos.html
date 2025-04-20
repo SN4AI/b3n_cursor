@@ -4,7 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>À Propos - B3N</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- Optimisation SEO -->
+    <meta name="description" content="Découvrez l'histoire et la mission de la Bibliothèque Numérique Ndiaga NDIAYE - B3N : notre engagement pour l'éducation et l'accès au savoir.">
+    <meta name="keywords" content="bibliothèque numérique, Ndiaga NDIAYE, mission éducative, partenaires, JPS OUAKAM, AABIS, Ouakam, Sénégal">
+    <!-- Préchargement des ressources critiques -->
+    <link rel="preload" href="styles.min.css" as="style">
+    <link rel="preload" href="animations.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <!-- PWA support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c3e50">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.min.css">
+    <link rel="stylesheet" href="animations.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .about-section {
@@ -29,11 +43,22 @@
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s var(--transition-function);
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
         .about-card h3 {
             color: var(--primary-color);
             margin-bottom: 1rem;
+            transition: color 0.3s var(--transition-function);
+        }
+
+        .about-card:hover h3 {
+            color: var(--secondary-color);
         }
 
         .partners {
@@ -49,8 +74,69 @@
         }
 
         .partner-logo {
-            width: 150px;
+            width: 180px;
             height: auto;
+            transition: transform 0.5s var(--transition-function);
+            border-radius: 8px;
+            padding: 15px;
+            background-color: var(--white);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            object-fit: contain;
+        }
+
+        .partner-logo:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .team-section {
+            margin-top: 3rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-member {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.5s var(--transition-function);
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .member-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--secondary-color);
+            transition: transform 0.5s var(--transition-function);
+        }
+
+        .team-member:hover .member-photo {
+            transform: scale(1.1);
+        }
+
+        .member-name {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .member-role {
+            color: var(--secondary-color);
+            font-style: italic;
+            margin-bottom: 1rem;
         }
 
         @media screen and (max-width: 768px) {
@@ -63,18 +149,67 @@
                 align-items: center;
             }
         }
+
+        .welcome-image-container {
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .welcome-image {
+            max-height: 450px;
+            max-width: 100%;
+            object-fit: contain;
+            width: auto;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            animation: zoomEffect 10s infinite alternate;
+        }
+
+        @keyframes zoomEffect {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
+        }
+        
+        /* Style pour les icônes dans les titres */
+        h2 i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+            transition: transform 0.3s var(--transition-function);
+        }
+        
+        h2:hover i {
+            transform: rotate(10deg) scale(1.2);
+        }
     </style>
 </head>
 <body>
+    <!-- Animation de chargement de page -->
+    <div class="page-transition">
+        <div class="loader"></div>
+    </div>
+
     <header>
         <nav>
             <div class="logo">
-                <h1>B3N</h1>
+                <div class="logo-content">
+                    <img src="images/logo.png" alt="Logo B3N" class="logo-img" width="60" height="60">
+                    <h1>B3N</h1>
+                </div>
                 <p>Bibliothèque Numérique Ndiaga NDIAYE</p>
             </div>
             <ul class="nav-links">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="bibliotheque.html">Bibliothèque</a></li>
+                <li><a href="galerie.html">Galerie</a></li>
                 <li><a href="projet-xam-xamle.html">Projet XAM XAMLÉ</a></li>
                 <li><a href="a-propos.html" class="active">À Propos</a></li>
             </ul>
@@ -90,13 +225,18 @@
         <section class="hero">
             <div class="hero-content">
                 <h1>À Propos de B3N</h1>
-                <p>Notre mission et notre vision</p>
+                <p class="subtitle">Notre mission et notre vision</p>
             </div>
         </section>
 
-        <section class="about-section">
+        <!-- Image d'accueil -->
+        <div class="welcome-image-container section-animate">
+            <img src="images/AABIS JPS XAMXAMLE.png" alt="Notre équipe B3N" class="welcome-image">
+        </div>
+
+        <section class="about-section section-animate">
             <div class="about-content">
-                <h2>Notre Histoire</h2>
+                <h2><i class="fas fa-history"></i> Notre Histoire</h2>
                 <p>La Bibliothèque Numérique Ndiaga NDIAYE (B3N) est née d'une collaboration entre la JPS OUAKAM et l'association AABIS, avec pour objectif de rendre le savoir accessible à tous. Notre initiative s'inscrit dans la continuité de l'œuvre du Professeur Ndiaga NDIAYE, qui a consacré sa vie à l'éducation et au développement de sa communauté.</p>
 
                 <div class="about-grid">
@@ -111,11 +251,35 @@
                     </div>
                 </div>
 
+                <div class="team-section">
+                    <h2><i class="fas fa-users"></i> Notre Équipe</h2>
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <img src="images/team/member1.jpg" alt="Membre de l'équipe" class="member-photo">
+                            <h3 class="member-name">Pr. Moussa Diop</h3>
+                            <p class="member-role">Directeur</p>
+                            <p>Professeur et chercheur passionné par l'éducation et le développement.</p>
+                        </div>
+                        <div class="team-member">
+                            <img src="images/team/member2.jpg" alt="Membre de l'équipe" class="member-photo">
+                            <h3 class="member-name">Mme Fatou Ndiaye</h3>
+                            <p class="member-role">Responsable de la Bibliothèque</p>
+                            <p>Bibliothécaire expérimentée avec une expertise en ressources numériques.</p>
+                        </div>
+                        <div class="team-member">
+                            <img src="images/team/member3.jpg" alt="Membre de l'équipe" class="member-photo">
+                            <h3 class="member-name">M. Ousmane Sow</h3>
+                            <p class="member-role">Coordinateur du Projet XAM XAMLÉ</p>
+                            <p>Ingénieur et éducateur, spécialiste des méthodes pédagogiques innovantes.</p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="partners">
-                    <h2>Nos Partenaires</h2>
+                    <h2><i class="fas fa-handshake"></i> Nos Partenaires</h2>
                     <div class="partner-logos">
-                        <img src="images/jps-logo.png" alt="JPS OUAKAM" class="partner-logo">
-                        <img src="images/aabis-logo.png" alt="Association AABIS" class="partner-logo">
+                        <img src="images/JPS LOGO.png" alt="JPS OUAKAM" class="partner-logo">
+                        <img src="images/AABIS.jpeg" alt="Association AABIS" class="partner-logo">
                     </div>
                 </div>
             </div>
@@ -128,25 +292,38 @@
                 <h3>Partenaires</h3>
                 <p>JPS OUAKAM</p>
                 <p>Association AABIS</p>
+                <p>Bibliothèque Issa Samb de Ouakam</p>
             </div>
             <div class="footer-section">
                 <h3>Contact</h3>
-                <p>Email: contact@b3n.sn</p>
+                <p><i class="fas fa-envelope"></i> Email: jpsouakam@gmail.com</p>
+                <p><i class="fas fa-phone"></i> Téléphone: +221 76 145 96 87 | +221 77 201 00 15</p>
+                <p><i class="fas fa-map-marker-alt"></i> Adresse: Ouakam, Dakar, Sénégal</p>
             </div>
             <div class="footer-section">
                 <h3>Suivez-nous</h3>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                <div class="social-follow">
+                    <a href="https://www.facebook.com/profile.php?id=61570152758917&sk=about" target="_blank" class="social-link">
+                        <i class="fab fa-facebook"></i>
+                        <span>Suivez-nous sur Facebook</span>
+                    </a>
+                    <a href="https://www.youtube.com/@jpsouakam" target="_blank" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                        <span>Suivez-nous sur YouTube</span>
+                    </a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 Bibliothèque Numérique Ndiaga NDIAYE - B3N. Tous droits réservés.</p>
+            <p>&copy; 2025 Bibliothèque Numérique Ndiaga NDIAYE - B3N. Tous droits réservés.</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Bouton retour en haut -->
+    <div id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script src="script.js" defer></script>
 </body>
 </html> 

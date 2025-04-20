@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche Avancée - B3N</title>
+    <!-- Optimisation SEO -->
+    <meta name="description" content="Recherche avancée dans les ressources de la Bibliothèque Numérique Ndiaga NDIAYE - B3N.">
+    <meta name="keywords" content="recherche avancée, bibliothèque numérique, Ndiaga NDIAYE, ressources éducatives">
+    <!-- Préchargement des ressources critiques -->
+    <link rel="preload" href="styles.min.css" as="style">
+    <link rel="preload" href="animations.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    <link rel="preload" href="search-advanced.js" as="script">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <!-- PWA support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c3e50">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.min.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Styles spécifiques à la page de recherche avancée */
+        .search-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .search-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .search-header h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .search-header p {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .search-main {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .search-filters {
+            flex: 1;
+            min-width: 250px;
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .search-results-container {
+            flex: 3;
+            min-width: 300px;
+        }
+        
+        .search-bar-advanced {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .search-bar-advanced input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--light-bg);
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .search-bar-advanced input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52,152,219,0.2);
+        }
+        
+        .search-bar-advanced button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .search-bar-advanced button:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .filter-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-group h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 0.5rem;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .filter-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--secondary-color);
+            cursor: pointer;
+        }
+        
+        .filter-option label {
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        
+        .filter-select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--light-bg);
+            border-radius: 5px;
+            font-size: 0.95rem;
+            color: var(--text-color);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%232c3e50' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: calc(100% - 0.75rem) center;
+            background-size: 12px;
+            cursor: pointer;
+        }
+        
+        .filter-select:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+        
+        .search-results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            background-color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .results-count {
+            font-size: 0.95rem;
+        }
+        
+        .results-count strong {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        
+        .results-sort {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .results-sort label {
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+        
+        .results-sort select {
+            padding: 0.5rem;
+            border: 1px solid var(--light-bg);
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        #search-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .resource-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .resource-thumbnail {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .resource-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .resource-card:hover .resource-thumbnail img {
+            transform: scale(1.05);
+        }
+        
+        .resource-type {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--white);
+            color: var(--primary-color);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .resource-type.livre {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .resource-type.cours {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .resource-type.guide {
+            background-color: #f39c12;
+            color: white;
+        }
+        
+        .resource-type.vidéo {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .resource-type.article {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .resource-type.présentation {
+            background-color: #1abc9c;
+            color: white;
+        }
+        
+        .resource-info {
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .resource-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .resource-author {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+        
+        .resource-details {
+            font-size: 0.85rem;
+            color: var(--text-color);
+            margin-bottom: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        .resource-description {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex-grow: 1;
+        }
+        
+        .resource-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tag {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .resource-link {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.7rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+        
+        .resource-link:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        .reset-filters {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .reset-filters:hover {
+            background-color: #dcdde1;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            grid-column: 1 / -1;
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            color: var(--light-bg);
+            margin-bottom: 1rem;
+        }
+        
+        .no-results p {
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .no-results p:first-of-type {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .search-main {
+                flex-direction: column;
+            }
+            
+            .search-filters {
+                position: static;
+                width: 100%;
+            }
+            
+            #search-results {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-results-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animation de chargement de page -->
+    <div class="page-transition">
+        <div class="loader"></div>
+    </div>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-content">
+                    <img src="images/logo.png" alt="Logo B3N" class="logo-img" width="60" height="60">
+                    <h1>B3N</h1>
+                </div>
+                <p>Bibliothèque Numérique Ndiaga NDIAYE</p>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="bibliotheque.html">Bibliothèque</a></li>
+                <li><a href="recherche-avancee.html" class="active">Recherche Avancée</a></li>
+                <li><a href="projet-xam-xamle.html">Projet XAM XAMLÉ</a></li>
+                <li><a href="a-propos.html">À Propos</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Recherche Avancée</h1>
+                <p class="subtitle">Trouvez précisément les ressources dont vous avez besoin</p>
+            </div>
+        </section>
+
+        <div class="search-container">
+            <div class="search-header">
+                <h2>Explorer notre bibliothèque</h2>
+                <p>Utilisez nos filtres avancés pour affiner votre recherche et trouver des ressources adaptées à vos besoins spécifiques.</p>
+            </div>
+
+            <div class="search-main">
+                <!-- Filtres de recherche -->
+                <aside class="search-filters">
+                    <div class="filter-group">
+                        <h3>Type de ressource</h3>
+                        <div class="filter-options">
+                            <div class="filter-option">
+                                <input type="checkbox" id="type-livre" class="type-filter" value="livre">
+                                <label for="type-livre">Livre</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="type-cours" class="type-filter" value="cours">
+                                <label for="type-cours">Cours</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="type-guide" class="type-filter" value="guide">
+                                <label for="type-guide">Guide pratique</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="type-video" class="type-filter" value="vidéo">
+                                <label for="type-video">Vidéo</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="type-article" class="type-filter" value="article">
+                                <label for="type-article">Article</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="type-presentation" class="type-filter" value="présentation">
+                                <label for="type-presentation">Présentation</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3>Catégorie</h3>
+                        <div class="filter-options">
+                            <div class="filter-option">
+                                <input type="checkbox" id="category-litterature" class="category-filter" value="littérature">
+                                <label for="category-litterature">Littérature</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="category-informatique" class="category-filter" value="informatique">
+                                <label for="category-informatique">Informatique</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="category-business" class="category-filter" value="business">
+                                <label for="category-business">Business</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="category-dev-personnel" class="category-filter" value="développement personnel">
+                                <label for="category-dev-personnel">Développement personnel</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="category-concours" class="category-filter" value="concours">
+                                <label for="category-concours">Concours</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="category-communication" class="category-filter" value="communication">
+                                <label for="category-communication">Communication</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="category-agriculture" class="category-filter" value="agriculture">
+                                <label for="category-agriculture">Agriculture</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3>Langue</h3>
+                        <select id="language-filter" class="filter-select">
+                            <option value="all">Toutes les langues</option>
+                            <option value="français">Français</option>
+                            <option value="anglais">Anglais</option>
+                            <option value="wolof">Wolof</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3>Niveau</h3>
+                        <select id="level-filter" class="filter-select">
+                            <option value="all">Tous les niveaux</option>
+                            <option value="débutant">Débutant</option>
+                            <option value="intermédiaire">Intermédiaire</option>
+                            <option value="avancé">Avancé</option>
+                            <option value="tous">Pour tous</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3>Année</h3>
+                        <select id="year-filter" class="filter-select">
+                            <option value="all">Toutes les années</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019 et avant</option>
+                        </select>
+                    </div>
+
+                    <button id="reset-filters" class="reset-filters">
+                        <i class="fas fa-undo-alt"></i>
+                        Réinitialiser les filtres
+                    </button>
+                </aside>
+
+                <!-- Résultats de recherche -->
+                <div class="search-results-container">
+                    <div class="search-bar-advanced">
+                        <input type="text" id="advanced-search-input" placeholder="Rechercher par titre, auteur, mot-clé...">
+                        <button type="button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+
+                    <div class="search-results-header">
+                        <div class="results-count">
+                            <span><strong id="result-count">10</strong> ressources trouvées</span>
+                        </div>
+                        <div class="results-sort">
+                            <label for="sort-option">Trier par :</label>
+                            <select id="sort-option">
+                                <option value="relevance">Pertinence</option>
+                                <option value="title_asc">Titre (A-Z)</option>
+                                <option value="title_desc">Titre (Z-A)</option>
+                                <option value="year_newest">Année (Plus récent)</option>
+                                <option value="year_oldest">Année (Plus ancien)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="search-results">
+                        <!-- Les résultats de recherche seront générés dynamiquement ici -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Partenaires</h3>
+                <p>JPS OUAKAM</p>
+                <p>Association AABIS</p>
+                <p>Bibliothèque Issa Samb de Ouakam</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> Email: jpsouakam@gmail.com</p>
+                <p><i class="fas fa-phone"></i> Téléphone: +221 76 145 96 87 | +221 77 201 00 15</p>
+                <p><i class="fas fa-map-marker-alt"></i> Adresse: Ouakam, Dakar, Sénégal</p>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <div class="social-follow">
+                    <a href="https://www.facebook.com/profile.php?id=61570152758917&sk=about" target="_blank" class="social-link">
+                        <i class="fab fa-facebook"></i>
+                        <span>Suivez-nous sur Facebook</span>
+                    </a>
+                    <a href="https://www.youtube.com/@jpsouakam" target="_blank" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                        <span>Suivez-nous sur YouTube</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Bibliothèque Numérique Ndiaga NDIAYE - B3N. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Bouton retour en haut -->
+    <div id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script src="script.js" defer></script>
+    <script src="search-advanced.js" defer></script>
+</body>
+</html> 
