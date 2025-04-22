@@ -489,6 +489,8 @@ footer {
         overflow-y: auto;
         z-index: 1000;
         box-shadow: -5px 0px 10px rgba(0,0,0,0.1);
+        /* Assurer que le menu reste visible une fois ouvert */
+        pointer-events: auto !important;
     }
 
     .nav-links.active {
@@ -497,12 +499,14 @@ footer {
         display: flex !important;  /* force l'affichage */
         visibility: visible !important;  /* assure la visibilité */
         opacity: 1 !important;  /* garantit l'opacité complète */
+        pointer-events: auto !important; /* assure l'interactivité */
     }
 
     .nav-links li {
         margin: 1rem 0;
         width: 80%;
         text-align: center;
+        display: block; /* Assurer que les éléments sont bien blocs */
     }
     
     .nav-links a {
@@ -512,6 +516,8 @@ footer {
         width: 100%;
         border-radius: 5px;
         transition: background-color 0.3s ease;
+        /* Augmenter la taille de la zone cliquable */
+        min-height: 44px; /* Recommandation pour les surfaces tactiles */
     }
     
     .nav-links a:hover, 
@@ -534,6 +540,8 @@ footer {
         padding: 10px;
         margin-right: -10px;
         -webkit-tap-highlight-color: transparent; /* Supprime l'effet de sélection sur mobile */
+        min-width: 44px; /* Recommandation pour les surfaces tactiles */
+        min-height: 44px; /* Recommandation pour les surfaces tactiles */
     }
 
     .burger div {
@@ -558,6 +566,9 @@ footer {
 
     body.menu-open {
         overflow: hidden;
+        position: fixed; /* Empêcher tout défilement du body quand le menu est ouvert */
+        width: 100%;
+        height: 100%;
     }
 
     .hero {
@@ -873,18 +884,25 @@ footer {
         right: 0;
         visibility: visible;
         opacity: 1;
+        height: calc(100vh - 80px) !important; /* Forcer la hauteur correcte */
+        overflow-y: auto !important; /* Assurer le défilement si nécessaire */
+        will-change: transform; /* Optimisation des performances */
     }
     
     .nav-links a {
         /* Rendre les boutons plus grands pour les écrans tactiles */
         padding: 15px 20px;
         margin: 5px 0;
+        min-height: 50px; /* Augmenter encore la zone cliquable */
+        font-size: 1.2rem; /* Texte plus grand pour faciliter la lecture */
     }
     
     /* Élargir la zone cliquable du burger */
     .burger {
         padding: 15px;
         margin: -15px;
+        min-width: 50px;
+        min-height: 50px;
     }
     
     /* Assurer que l'élément principal est visible */

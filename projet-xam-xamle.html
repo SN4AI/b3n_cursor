@@ -495,6 +495,12 @@
             const nav = document.querySelector('.nav-links');
             
             if (burger && nav) {
+                // Empêcher la propagation des événements depuis le menu pour éviter la fermeture immédiate
+                nav.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+                
+                // Gestionnaire pour le burger
                 burger.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -503,19 +509,37 @@
                     burger.classList.toggle('active');
                     document.body.classList.toggle('menu-open');
                     
-                    console.log('Menu toggled: ' + nav.classList.contains('active'));
+                    // Prévenir les clics qui pourraient immédiatement fermer le menu
+                    setTimeout(function() {
+                        console.log('Menu toggled: ' + nav.classList.contains('active'));
+                    }, 10);
                 });
                 
-                // Fermer le menu quand on clique sur un lien
+                // Fermer le menu seulement quand on clique sur un lien spécifique
                 const navLinks = document.querySelectorAll('.nav-links a');
                 navLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        if (nav.classList.contains('active')) {
-                            nav.classList.remove('active');
-                            burger.classList.remove('active');
-                            document.body.classList.remove('menu-open');
-                        }
+                    link.addEventListener('click', function(e) {
+                        // Ne pas arrêter immédiatement la propagation
+                        setTimeout(function() {
+                            if (nav.classList.contains('active')) {
+                                nav.classList.remove('active');
+                                burger.classList.remove('active');
+                                document.body.classList.remove('menu-open');
+                            }
+                        }, 100);
                     });
+                });
+                
+                // Empêcher la fermeture du menu lors des clics à l'intérieur
+                document.addEventListener('click', function(e) {
+                    // Fermer uniquement si on clique hors du menu et de l'icône burger
+                    if (nav.classList.contains('active') && 
+                        !nav.contains(e.target) && 
+                        !burger.contains(e.target)) {
+                        nav.classList.remove('active');
+                        burger.classList.remove('active');
+                        document.body.classList.remove('menu-open');
+                    }
                 });
             }
         });
