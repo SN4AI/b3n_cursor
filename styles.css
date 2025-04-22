@@ -52,24 +52,33 @@ nav {
     align-items: flex-start;
     text-align: left;
     min-width: 200px;
+    cursor: pointer;
 }
 
 .logo-content {
     display: flex;
     align-items: center;
     margin-bottom: 5px;
+    transition: transform 0.2s ease;
+}
+
+.logo:hover .logo-content {
+    transform: scale(1.03);
 }
 
 .logo-img {
     height: 60px;
     width: auto;
     margin-right: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
 .logo h1 {
     font-size: 2rem;
     margin: 0;
     color: var(--logo-color);
+    cursor: pointer;
 }
 
 .logo p {
@@ -682,5 +691,188 @@ footer {
 
     .social-link span {
         font-size: 0.9rem;
+    }
+}
+
+/* Media Queries pour le mode paysage et la responsivité générale */
+@media screen and (orientation: landscape) and (max-width: 1024px) {
+    /* Rendre le contenu visible en mode paysage */
+    .hero {
+        margin-top: 70px;
+        min-height: auto;
+        padding: 1.5rem 1rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-content .subtitle {
+        font-size: 1.1rem;
+    }
+    
+    /* Réduire les paddings pour optimiser l'espace en hauteur */
+    .mission, .actualites, .ressources, .hommage, .about-section, .project-section {
+        padding: 2rem 1rem;
+    }
+    
+    /* Adapter les grilles en mode paysage */
+    .mission-content,
+    .actualites-content,
+    .ressources-content,
+    .about-grid,
+    .project-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    /* Réduire les marges entre les éléments */
+    .mission-item, .actualite-card, .ressource-categorie, .about-card, .project-card {
+        margin-bottom: 1rem;
+        padding: 1.5rem;
+    }
+    
+    /* Réduire la taille des titres de section */
+    h2 {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Amélioration pour les images d'accueil sur les pages "XAM XAMLÉ" et "A Propos" */
+@media screen and (max-width: 1024px) {
+    .welcome-image-container {
+        max-width: 100%;
+        padding: 0 1rem;
+        overflow: hidden;
+    }
+    
+    .welcome-image {
+        max-width: 100%;
+        max-height: auto;
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+}
+
+/* Optimisations supplémentaires pour tous les appareils mobiles */
+@media screen and (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+    
+    .logo p {
+        font-size: 0.8rem;
+    }
+    
+    .logo-img {
+        height: 45px;
+    }
+    
+    .welcome-image {
+        max-height: 300px;
+    }
+    
+    .partner-logos {
+        flex-wrap: wrap;
+    }
+    
+    .partner-logo {
+        width: 120px;
+    }
+    
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Styles pour le bouton d'installation de l'application */
+.install-app {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin: 1rem auto;
+    display: block;
+}
+
+.install-app:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.install-container {
+    margin: 1rem 0;
+    text-align: center;
+}
+
+/* Style pour la bannière d'installation */
+.install-banner {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.install-banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.install-now-btn {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.install-now-btn:hover {
+    background-color: var(--accent-color);
+}
+
+.close-banner-btn {
+    background: transparent;
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 0 10px;
+}
+
+/* Ajustement pour les appareils mobiles */
+@media screen and (max-width: 480px) {
+    .install-banner-content {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+    }
+    
+    .close-banner-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
     }
 } 

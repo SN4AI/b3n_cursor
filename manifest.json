@@ -8,20 +8,39 @@
   "theme_color": "#2c3e50",
   "icons": [
     {
-      "src": "images/icon-192x192.png",
+      "src": "images/app-icons/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "images/icon-512x512.png",
+      "src": "images/app-icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "categories": ["education", "books", "learning"],
   "lang": "fr-FR",
-  "dir": "ltr"
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Bibliothèque",
+      "short_name": "Bibliothèque",
+      "description": "Accéder à la bibliothèque de ressources",
+      "url": "/bibliotheque.html",
+      "icons": [{ "src": "images/app-icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Projet XAM XAMLÉ",
+      "short_name": "XAM XAMLÉ",
+      "description": "Découvrir le projet XAM XAMLÉ",
+      "url": "/projet-xam-xamle.html",
+      "icons": [{ "src": "images/app-icons/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ]
 } 

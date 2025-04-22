@@ -175,7 +175,7 @@
                 transform: scale(1);
             }
             100% {
-                transform: scale(1.1);
+                transform: scale(1.05);  /* Réduire l'effet de zoom pour éviter tout débordement */
             }
         }
         
@@ -189,6 +189,51 @@
         h2:hover i {
             transform: rotate(10deg) scale(1.2);
         }
+        
+        /* Styles responsives supplémentaires pour les appareils mobiles */
+        @media screen and (max-width: 480px) {
+            .welcome-image-container {
+                margin: 0 auto 2rem;
+            }
+            
+            .welcome-image {
+                max-height: 300px;
+                border-radius: 8px;
+            }
+            
+            .about-section {
+                padding: 3rem 1rem;
+            }
+            
+            .about-card {
+                padding: 1.5rem;
+            }
+            
+            .team-member {
+                padding: 1.2rem;
+            }
+        }
+        
+        /* Amélioration pour l'orientation paysage */
+        @media screen and (orientation: landscape) and (max-width: 1024px) {
+            .welcome-image-container {
+                max-height: 250px;
+                margin: 0 auto 2rem;
+            }
+            
+            .welcome-image {
+                max-height: 250px;
+            }
+            
+            @keyframes zoomEffect {
+                0% {
+                    transform: scale(1);
+                }
+                100% {
+                    transform: scale(1.03); /* Zoom encore plus réduit en mode paysage */
+                }
+            }
+        }
     </style>
 </head>
 <body>
@@ -201,8 +246,12 @@
         <nav>
             <div class="logo">
                 <div class="logo-content">
-                    <img src="images/logo.png" alt="Logo B3N" class="logo-img" width="60" height="60">
-                    <h1>B3N</h1>
+                    <a href="index.html">
+                        <img src="images/logo.png" alt="Logo B3N" class="logo-img" width="60" height="60">
+                    </a>
+                    <a href="index.html" style="text-decoration: none; color: inherit;">
+                        <h1>B3N</h1>
+                    </a>
                 </div>
                 <p>Bibliothèque Numérique Ndiaga NDIAYE</p>
             </div>

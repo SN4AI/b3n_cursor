@@ -217,4 +217,267 @@ document.addEventListener('click', (e) => {
             }
         });
     }
-}); 
+});
+
+// Gestion de l'installation de l'application (PWA)
+let deferredPrompt;
+const addBtn = document.createElement('button');
+addBtn.classList.add('install-app');
+addBtn.style.display = 'none';
+addBtn.textContent = 'Installer l\'application';
+
+// Vérifier si tous les éléments du DOM sont chargés
+document.addEventListener('DOMContentLoaded', function() {
+    // Ajout du bouton d'installation dans le footer
+    const footer = document.querySelector('.footer-content');
+    if (footer) {
+        const installContainer = document.createElement('div');
+        installContainer.classList.add('install-container');
+        installContainer.style.textAlign = 'center';
+        installContainer.style.margin = '1rem 0';
+        installContainer.appendChild(addBtn);
+        footer.appendChild(installContainer);
+    }
+    
+    // Animation des liens de navigation active
+    activateCurrentPageLink();
+    
+    // Gestion du menu burger
+    setupBurgerMenu();
+    
+    // S'assurer que le logo est cliquable
+    makeLogoClickable();
+    
+    // Enregistrement du service worker pour PWA
+    registerServiceWorker();
+});
+
+// Installation de l'application
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Empêcher Chrome de montrer automatiquement la bannière d'installation
+    e.preventDefault();
+    // Stocker l'événement pour pouvoir le déclencher plus tard
+    deferredPrompt = e;
+    // Afficher le bouton d'installation
+    addBtn.style.display = 'block';
+    
+    // Ajouter une bannière d'installation en haut de la page pour les utilisateurs mobiles
+    showInstallBanner();
+});
+
+// Gestionnaire de clic pour le bouton d'installation
+addBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    
+    // Montrer la bannière d'installation
+    deferredPrompt.prompt();
+    
+    // Attendre que l'utilisateur réponde à la bannière
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`User response to the install prompt: ${outcome}`);
+    
+    // Nous n'avons plus besoin de l'événement différé
+    deferredPrompt = null;
+    
+    // Cacher le bouton d'installation
+    addBtn.style.display = 'none';
+    
+    // Cacher la bannière d'installation si elle est visible
+    const installBanner = document.querySelector('.install-banner');
+    if (installBanner) {
+        installBanner.style.display = 'none';
+    }
+});
+
+// Afficher une bannière d'installation en haut du site
+function showInstallBanner() {
+    // Vérifier si la bannière existe déjà
+    if (document.querySelector('.install-banner')) return;
+    
+    const banner = document.createElement('div');
+    banner.classList.add('install-banner');
+    banner.innerHTML = `
+        <div class="install-banner-content">
+            <p>Installez B3N pour un accès rapide</p>
+            <button class="install-now-btn">Installer</button>
+            <button class="close-banner-btn">&times;</button>
+        </div>
+    `;
+    
+    // Style de la bannière
+    banner.style.position = 'fixed';
+    banner.style.top = '0';
+    banner.style.left = '0';
+    banner.style.right = '0';
+    banner.style.background = 'var(--primary-color)';
+    banner.style.color = 'white';
+    banner.style.padding = '10px';
+    banner.style.zIndex = '1001';
+    banner.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+    banner.style.display = 'block';
+    
+    // Style du contenu de la bannière
+    const content = banner.querySelector('.install-banner-content');
+    content.style.display = 'flex';
+    content.style.alignItems = 'center';
+    content.style.justifyContent = 'space-between';
+    content.style.maxWidth = '1200px';
+    content.style.margin = '0 auto';
+    content.style.padding = '0 1rem';
+    
+    // Style des boutons
+    const installBtn = banner.querySelector('.install-now-btn');
+    installBtn.style.background = 'var(--secondary-color)';
+    installBtn.style.color = 'white';
+    installBtn.style.border = 'none';
+    installBtn.style.padding = '8px 15px';
+    installBtn.style.borderRadius = '5px';
+    installBtn.style.cursor = 'pointer';
+    installBtn.style.fontWeight = 'bold';
+    
+    const closeBtn = banner.querySelector('.close-banner-btn');
+    closeBtn.style.background = 'transparent';
+    closeBtn.style.color = 'white';
+    closeBtn.style.border = 'none';
+    closeBtn.style.cursor = 'pointer';
+    closeBtn.style.fontSize = '20px';
+    closeBtn.style.padding = '0 10px';
+    
+    // Ajouter au DOM
+    document.body.insertBefore(banner, document.body.firstChild);
+    
+    // Ajuster l'espacement du header pour éviter le chevauchement
+    const header = document.querySelector('header');
+    if (header) {
+        header.style.marginTop = banner.offsetHeight + 'px';
+    }
+    
+    // Gestionnaire d'événements pour les boutons
+    installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User response to the install prompt: ${outcome}`);
+        deferredPrompt = null;
+        banner.style.display = 'none';
+        // Réinitialiser la marge du header
+        if (header) {
+            header.style.marginTop = '0';
+        }
+    });
+    
+    closeBtn.addEventListener('click', () => {
+        banner.style.display = 'none';
+        // Réinitialiser la marge du header
+        if (header) {
+            header.style.marginTop = '0';
+        }
+    });
+}
+
+// Enregistrement du service worker
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker enregistré avec succès:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.log('Échec de l\'enregistrement du Service Worker:', error);
+                });
+        });
+    }
+}
+
+// Fonction pour activer le lien de navigation correspondant à la page actuelle
+function activateCurrentPageLink() {
+    const currentPage = window.location.pathname;
+    const navLinks = document.querySelectorAll('.nav-links a');
+    
+    navLinks.forEach(link => {
+        const linkPath = link.getAttribute('href');
+        if (currentPage === linkPath || 
+            (currentPage.includes(linkPath) && linkPath !== '/')) {
+            link.classList.add('active');
+        }
+    });
+    
+    // S'assurer que le logo est cliquable et renvoie vers la page d'accueil
+    const logoImg = document.querySelector('.logo-img');
+    const logoTitle = document.querySelector('.logo h1');
+    
+    if (logoImg && !logoImg.parentElement.tagName === 'A') {
+        logoImg.style.cursor = 'pointer';
+        logoImg.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+    }
+    
+    if (logoTitle && !logoTitle.parentElement.tagName === 'A') {
+        logoTitle.style.cursor = 'pointer';
+        logoTitle.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+    }
+}
+
+// Configuration du menu burger pour la navigation mobile
+function setupBurgerMenu() {
+    const burger = document.querySelector('.burger');
+    const nav = document.querySelector('.nav-links');
+    
+    if (burger && nav) {
+        burger.addEventListener('click', () => {
+            // Toggle navigation
+            nav.classList.toggle('active');
+            burger.classList.toggle('active');
+            
+            // Animation des liens
+            const navLinks = document.querySelectorAll('.nav-links li');
+            navLinks.forEach((link, index) => {
+                if (link.style.animation) {
+                    link.style.animation = '';
+                } else {
+                    link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                }
+            });
+        });
+    }
+}
+
+// Fonction pour s'assurer que le logo est cliquable sur toutes les pages
+function makeLogoClickable() {
+    const logoContainer = document.querySelector('.logo');
+    
+    if (logoContainer) {
+        // Ajouter un style de curseur pour indiquer que c'est cliquable
+        logoContainer.style.cursor = 'pointer';
+        
+        // Ajouter un gestionnaire d'événements au conteneur du logo
+        logoContainer.addEventListener('click', (e) => {
+            // Vérifier si l'élément cliqué est déjà à l'intérieur d'un lien
+            if (!e.target.closest('a')) {
+                window.location.href = 'index.html';
+            }
+        });
+        
+        // S'assurer que l'image du logo est cliquable si elle n'est pas déjà dans un lien
+        const logoImg = logoContainer.querySelector('.logo-img');
+        if (logoImg && !logoImg.closest('a')) {
+            logoImg.style.cursor = 'pointer';
+            logoImg.addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+        }
+        
+        // S'assurer que le titre du logo est cliquable s'il n'est pas déjà dans un lien
+        const logoTitle = logoContainer.querySelector('h1');
+        if (logoTitle && !logoTitle.closest('a')) {
+            logoTitle.style.cursor = 'pointer';
+            logoTitle.addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+        }
+    }
+} 
