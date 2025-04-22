@@ -484,19 +484,15 @@ function setupBurgerMenu() {
         const navLinks = document.querySelectorAll('.nav-links a');
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
-                // Fermer le menu uniquement si c'est sur mobile (si le menu burger est visible)
-                if (getComputedStyle(burgerElement).display !== 'none' && nav.classList.contains('active')) {
-                    // Petit délai pour permettre à l'utilisateur de voir le clic avant que le menu ne se ferme
-                    setTimeout(() => {
-                        toggleMenu();
-                    }, 100);
+                // Ne ferme plus automatiquement le menu en mode portrait sur mobile
+                // Vérifier s'il s'agit d'un lien d'ancre interne
+                if (link.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
                     
-                    // Si c'est un lien interne (ancre), empêcher le comportement par défaut
-                    // car nous gérerons le défilement après la fermeture du menu
-                    if (link.getAttribute('href').startsWith('#')) {
-                        e.preventDefault();
-                        const targetId = link.getAttribute('href');
-                        
+                    // Pour les liens d'ancre, fermer le menu et défiler vers la cible
+                    if (window.matchMedia("(orientation: portrait) and (max-width: 768px)").matches) {
+                        // En mode portrait sur mobile, fermer le menu seulement après un délai
                         setTimeout(() => {
                             const targetElement = document.querySelector(targetId);
                             if (targetElement) {
@@ -504,10 +500,53 @@ function setupBurgerMenu() {
                                     behavior: 'smooth'
                                 });
                             }
-                        }, 300); // Délai pour attendre que le menu se ferme
+                        }, 300);
+                    } else {
+                        // Sur desktop ou en mode paysage, comportement normal: fermer et défiler
+                        setTimeout(() => {
+                            toggleMenu();
+                            const targetElement = document.querySelector(targetId);
+                            if (targetElement) {
+                                targetElement.scrollIntoView({
+                                    behavior: 'smooth'
+                                });
+                            }
+                        }, 100);
+                    }
+                } else if (!window.matchMedia("(orientation: portrait) and (max-width: 768px)").matches) {
+                    // Sur desktop ou en mode paysage, conserver le comportement original
+                    if (getComputedStyle(burgerElement).display !== 'none' && nav.classList.contains('active')) {
+                        setTimeout(() => {
+                            toggleMenu();
+                        }, 100);
                     }
                 }
+                // Pour les liens vers d'autres pages en mode portrait mobile, ne rien faire (menu reste ouvert)
             });
+        });
+        
+        // Ajouter un bouton de fermeture explicite au menu
+        const closeButton = document.createElement('div');
+        closeButton.className = 'menu-close-btn';
+        closeButton.innerHTML = '<i class="fas fa-times"></i>';
+        closeButton.style.position = 'absolute';
+        closeButton.style.top = '10px';
+        closeButton.style.right = '10px';
+        closeButton.style.fontSize = '1.5rem';
+        closeButton.style.color = 'var(--primary-color)';
+        closeButton.style.cursor = 'pointer';
+        closeButton.style.padding = '10px';
+        closeButton.style.zIndex = '1001';
+        
+        // Vérifier si le bouton existe déjà pour éviter les doublons
+        if (!nav.querySelector('.menu-close-btn')) {
+            nav.prepend(closeButton);
+        }
+        
+        closeButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleMenu();
         });
         
         // Fermer le menu lorsqu'on clique en dehors
