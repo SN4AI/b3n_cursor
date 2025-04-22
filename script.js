@@ -430,10 +430,22 @@ function setupBurgerMenu() {
     
     if (burger && nav) {
         // Fonction pour basculer le menu
-        function toggleMenu() {
+        function toggleMenu(event) {
+            // Empêcher le comportement par défaut sur les appareils tactiles
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            // Force l'application des styles
             nav.classList.toggle('active');
             burger.classList.toggle('active');
             body.classList.toggle('menu-open');
+            
+            // Forcer un reflow pour s'assurer que les changements sont appliqués
+            void nav.offsetWidth;
+            
+            console.log("Menu toggled. Active class: " + nav.classList.contains('active'));
             
             // Animation des liens
             const navLinks = document.querySelectorAll('.nav-links li');
@@ -444,17 +456,36 @@ function setupBurgerMenu() {
                     link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
                 }
             });
+            
+            // Log pour débogage
+            if (nav.classList.contains('active')) {
+                console.log("Menu should be visible now");
+            } else {
+                console.log("Menu should be hidden now");
+            }
         }
         
-        // Gestionnaire d'événements pour le bouton burger
-        burger.addEventListener('click', toggleMenu);
+        // Supprimer les anciens écouteurs d'événements pour éviter les doublons
+        const newBurger = burger.cloneNode(true);
+        burger.parentNode.replaceChild(newBurger, burger);
+        
+        // Ajouter de nouveaux écouteurs d'événements
+        const burgerElement = document.querySelector('.burger');
+        
+        // Ajouter plusieurs types d'événements pour assurer la compatibilité sur tous les appareils
+        ['click', 'touchstart', 'touchend'].forEach(eventType => {
+            burgerElement.addEventListener(eventType, (e) => {
+                e.preventDefault();
+                toggleMenu(e);
+            }, { passive: false });
+        });
         
         // Fermer le menu lorsqu'un lien est cliqué
         const navLinks = document.querySelectorAll('.nav-links a');
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 // Fermer le menu uniquement si c'est sur mobile (si le menu burger est visible)
-                if (getComputedStyle(burger).display !== 'none' && nav.classList.contains('active')) {
+                if (getComputedStyle(burgerElement).display !== 'none' && nav.classList.contains('active')) {
                     // Petit délai pour permettre à l'utilisateur de voir le clic avant que le menu ne se ferme
                     setTimeout(() => {
                         toggleMenu();
@@ -483,7 +514,7 @@ function setupBurgerMenu() {
         document.addEventListener('click', (e) => {
             if (nav.classList.contains('active') && 
                 !nav.contains(e.target) && 
-                !burger.contains(e.target)) {
+                !burgerElement.contains(e.target)) {
                 toggleMenu();
             }
         });
@@ -497,6 +528,11 @@ function setupBurgerMenu() {
             }
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         });
+        
+        // Vérifier que le menu est correctement initialisé
+        console.log("Menu burger setup completed");
+    } else {
+        console.error("Burger menu elements not found");
     }
 }
 

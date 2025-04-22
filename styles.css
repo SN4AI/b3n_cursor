@@ -476,7 +476,7 @@ footer {
 
     .nav-links {
         position: fixed;
-        right: -100%;
+        right: -100%;  /* position hors écran par défaut */
         top: 80px;
         height: calc(100vh - 80px);
         background-color: var(--white);
@@ -492,7 +492,11 @@ footer {
     }
 
     .nav-links.active {
-        right: 0;
+        right: 0;  /* s'affiche de la droite vers la gauche */
+        transform: translateX(0);  /* garantit que le menu est visible */
+        display: flex !important;  /* force l'affichage */
+        visibility: visible !important;  /* assure la visibilité */
+        opacity: 1 !important;  /* garantit l'opacité complète */
     }
 
     .nav-links li {
@@ -529,6 +533,7 @@ footer {
         z-index: 1001;
         padding: 10px;
         margin-right: -10px;
+        -webkit-tap-highlight-color: transparent; /* Supprime l'effet de sélection sur mobile */
     }
 
     .burger div {
@@ -843,6 +848,14 @@ footer {
     .nav-links {
         top: 70px; /* Ajustement pour les petits écrans */
         height: calc(100vh - 70px);
+        visibility: hidden; /* Caché par défaut */
+        opacity: 0;
+        transition: right 0.3s ease-in-out, visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+    
+    .nav-links.active {
+        visibility: visible;
+        opacity: 1;
     }
 }
 
@@ -851,12 +864,32 @@ footer {
         /* Assurer la visibilité complète du menu sur les appareils en mode portrait */
         max-height: calc(100vh - 80px);
         padding-bottom: 100px; /* Espace supplémentaire pour assurer que tout est visible */
+        visibility: hidden; /* Caché par défaut */
+        opacity: 0;
+        transition: right 0.3s ease-in-out, visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+    
+    .nav-links.active {
+        right: 0;
+        visibility: visible;
+        opacity: 1;
     }
     
     .nav-links a {
         /* Rendre les boutons plus grands pour les écrans tactiles */
         padding: 15px 20px;
         margin: 5px 0;
+    }
+    
+    /* Élargir la zone cliquable du burger */
+    .burger {
+        padding: 15px;
+        margin: -15px;
+    }
+    
+    /* Assurer que l'élément principal est visible */
+    .main-content {
+        margin-top: 80px;
     }
 }
 

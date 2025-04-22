@@ -262,7 +262,7 @@
                 <li><a href="projet-xam-xamle.html">Projet XAM XAMLÉ</a></li>
                 <li><a href="a-propos.html" class="active">À Propos</a></li>
             </ul>
-            <div class="burger">
+            <div class="burger" id="burger-menu">
                 <div class="line1"></div>
                 <div class="line2"></div>
                 <div class="line3"></div>
@@ -372,6 +372,39 @@
     <div id="back-to-top">
         <i class="fas fa-arrow-up"></i>
     </div>
+
+    <script>
+        // Script pour le menu burger (ajout direct pour contourner tout problème avec script.js)
+        document.addEventListener('DOMContentLoaded', function() {
+            const burger = document.getElementById('burger-menu');
+            const nav = document.querySelector('.nav-links');
+            
+            if (burger && nav) {
+                burger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    nav.classList.toggle('active');
+                    burger.classList.toggle('active');
+                    document.body.classList.toggle('menu-open');
+                    
+                    console.log('Menu toggled: ' + nav.classList.contains('active'));
+                });
+                
+                // Fermer le menu quand on clique sur un lien
+                const navLinks = document.querySelectorAll('.nav-links a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (nav.classList.contains('active')) {
+                            nav.classList.remove('active');
+                            burger.classList.remove('active');
+                            document.body.classList.remove('menu-open');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
 
     <script src="script.js" defer></script>
 </body>
