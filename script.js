@@ -426,12 +426,14 @@ function activateCurrentPageLink() {
 function setupBurgerMenu() {
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.nav-links');
+    const body = document.body;
     
     if (burger && nav) {
-        burger.addEventListener('click', () => {
-            // Toggle navigation
+        // Fonction pour basculer le menu
+        function toggleMenu() {
             nav.classList.toggle('active');
             burger.classList.toggle('active');
+            body.classList.toggle('menu-open');
             
             // Animation des liens
             const navLinks = document.querySelectorAll('.nav-links li');
@@ -442,6 +444,58 @@ function setupBurgerMenu() {
                     link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
                 }
             });
+        }
+        
+        // Gestionnaire d'événements pour le bouton burger
+        burger.addEventListener('click', toggleMenu);
+        
+        // Fermer le menu lorsqu'un lien est cliqué
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Fermer le menu uniquement si c'est sur mobile (si le menu burger est visible)
+                if (getComputedStyle(burger).display !== 'none' && nav.classList.contains('active')) {
+                    // Petit délai pour permettre à l'utilisateur de voir le clic avant que le menu ne se ferme
+                    setTimeout(() => {
+                        toggleMenu();
+                    }, 100);
+                    
+                    // Si c'est un lien interne (ancre), empêcher le comportement par défaut
+                    // car nous gérerons le défilement après la fermeture du menu
+                    if (link.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = link.getAttribute('href');
+                        
+                        setTimeout(() => {
+                            const targetElement = document.querySelector(targetId);
+                            if (targetElement) {
+                                targetElement.scrollIntoView({
+                                    behavior: 'smooth'
+                                });
+                            }
+                        }, 300); // Délai pour attendre que le menu se ferme
+                    }
+                }
+            });
+        });
+        
+        // Fermer le menu lorsqu'on clique en dehors
+        document.addEventListener('click', (e) => {
+            if (nav.classList.contains('active') && 
+                !nav.contains(e.target) && 
+                !burger.contains(e.target)) {
+                toggleMenu();
+            }
+        });
+        
+        // Fermer le menu lorsqu'on fait défiler la page
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop + 10 && nav.classList.contains('active')) {
+                toggleMenu();
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         });
     }
 }
