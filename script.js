@@ -445,24 +445,17 @@ function setupBurgerMenu() {
             // Forcer un reflow pour s'assurer que les changements sont appliqués
             void nav.offsetWidth;
             
-            console.log("Menu toggled. Active class: " + nav.classList.contains('active'));
-            
-            // Animation des liens
-            const navLinks = document.querySelectorAll('.nav-links li');
-            navLinks.forEach((link, index) => {
-                if (link.style.animation) {
-                    link.style.animation = '';
-                } else {
-                    link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
-                }
+            // Animation des liens - utilisation de requestAnimationFrame pour de meilleures performances
+            requestAnimationFrame(() => {
+                const navLinks = document.querySelectorAll('.nav-links li');
+                navLinks.forEach((link, index) => {
+                    if (link.style.animation) {
+                        link.style.animation = '';
+                    } else {
+                        link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                    }
+                });
             });
-            
-            // Log pour débogage
-            if (nav.classList.contains('active')) {
-                console.log("Menu should be visible now");
-            } else {
-                console.log("Menu should be hidden now");
-            }
         }
         
         // Supprimer les anciens écouteurs d'événements pour éviter les doublons
@@ -472,18 +465,26 @@ function setupBurgerMenu() {
         // Ajouter de nouveaux écouteurs d'événements
         const burgerElement = document.querySelector('.burger');
         
-        // Ajouter plusieurs types d'événements pour assurer la compatibilité sur tous les appareils
-        ['click', 'touchstart', 'touchend'].forEach(eventType => {
-            burgerElement.addEventListener(eventType, (e) => {
+        // Détection de l'appareil pour optimiser les événements
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        
+        // Ajouter les événements appropriés selon le type d'appareil
+        if (isMobile) {
+            burgerElement.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 toggleMenu(e);
             }, { passive: false });
-        });
+        } else {
+            burgerElement.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleMenu(e);
+            });
+        }
         
         // Fermer le menu lorsqu'un lien est cliqué
         const navLinks = document.querySelectorAll('.nav-links a');
         navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
+            link.addEventListener(isMobile ? 'touchend' : 'click', (e) => {
                 // Ne ferme plus automatiquement le menu en mode portrait sur mobile
                 // Vérifier s'il s'agit d'un lien d'ancre interne
                 if (link.getAttribute('href').startsWith('#')) {
@@ -503,50 +504,28 @@ function setupBurgerMenu() {
                         }, 300);
                     } else {
                         // Sur desktop ou en mode paysage, comportement normal: fermer et défiler
-                        setTimeout(() => {
+                        requestAnimationFrame(() => {
                             toggleMenu();
-                            const targetElement = document.querySelector(targetId);
-                            if (targetElement) {
-                                targetElement.scrollIntoView({
-                                    behavior: 'smooth'
-                                });
-                            }
-                        }, 100);
+                            setTimeout(() => {
+                                const targetElement = document.querySelector(targetId);
+                                if (targetElement) {
+                                    targetElement.scrollIntoView({
+                                        behavior: 'smooth'
+                                    });
+                                }
+                            }, 100);
+                        });
                     }
                 } else if (!window.matchMedia("(orientation: portrait) and (max-width: 768px)").matches) {
                     // Sur desktop ou en mode paysage, conserver le comportement original
                     if (getComputedStyle(burgerElement).display !== 'none' && nav.classList.contains('active')) {
-                        setTimeout(() => {
+                        requestAnimationFrame(() => {
                             toggleMenu();
-                        }, 100);
+                        });
                     }
                 }
                 // Pour les liens vers d'autres pages en mode portrait mobile, ne rien faire (menu reste ouvert)
-            });
-        });
-        
-        // Ajouter un bouton de fermeture explicite au menu
-        const closeButton = document.createElement('div');
-        closeButton.className = 'menu-close-btn';
-        closeButton.innerHTML = '<i class="fas fa-times"></i>';
-        closeButton.style.position = 'absolute';
-        closeButton.style.top = '10px';
-        closeButton.style.right = '10px';
-        closeButton.style.fontSize = '1.5rem';
-        closeButton.style.color = 'var(--primary-color)';
-        closeButton.style.cursor = 'pointer';
-        closeButton.style.padding = '10px';
-        closeButton.style.zIndex = '1001';
-        
-        // Vérifier si le bouton existe déjà pour éviter les doublons
-        if (!nav.querySelector('.menu-close-btn')) {
-            nav.prepend(closeButton);
-        }
-        
-        closeButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMenu();
+            }, { passive: false });
         });
         
         // Fermer le menu lorsqu'on clique en dehors
@@ -558,18 +537,46 @@ function setupBurgerMenu() {
             }
         });
         
-        // Fermer le menu lorsqu'on fait défiler la page
+        // Comportement spécial pour le défilement sur mobile
         let lastScrollTop = 0;
-        window.addEventListener('scroll', () => {
+        let scrollThreshold = 10;
+        let scrollTimeout;
+        
+        function handleScroll() {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop > lastScrollTop + 10 && nav.classList.contains('active')) {
+            // Seulement fermer le menu si on défile vers le bas de façon significative
+            if (scrollTop > lastScrollTop + scrollThreshold && nav.classList.contains('active')) {
                 toggleMenu();
             }
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-        });
+        }
         
-        // Vérifier que le menu est correctement initialisé
-        console.log("Menu burger setup completed");
+        // Utiliser un écouteur d'événement optimisé pour le défilement
+        window.addEventListener('scroll', () => {
+            if (scrollTimeout) {
+                window.cancelAnimationFrame(scrollTimeout);
+            }
+            scrollTimeout = window.requestAnimationFrame(handleScroll);
+        }, { passive: true });
+        
+        // Gérer les changements d'orientation
+        window.addEventListener('orientationchange', () => {
+            // Donner un délai pour que le navigateur termine le changement d'orientation
+            setTimeout(() => {
+                // Si on passe en mode paysage et que le menu est ouvert, ajuster le menu
+                if (window.orientation === 90 || window.orientation === -90) {
+                    if (nav.classList.contains('active')) {
+                        // Ajuster la hauteur du menu pour le mode paysage
+                        nav.style.maxHeight = `${window.innerHeight - 60}px`;
+                    }
+                } else {
+                    // Mode portrait
+                    if (nav.classList.contains('active')) {
+                        nav.style.maxHeight = `${window.innerHeight - 80}px`;
+                    }
+                }
+            }, 300);
+        });
     } else {
         console.error("Burger menu elements not found");
     }

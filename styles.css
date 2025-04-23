@@ -879,10 +879,12 @@ footer {
         opacity: 0;
         transition: right 0.3s ease-in-out, visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
         /* Ajouter une marge en haut pour le bouton de fermeture */
-        padding-top: 60px;
+        padding-top: 10px; /* Réduire padding-top puisqu'il n'y a plus de bouton de fermeture */
         /* Style pour mobile portrait */
         background-color: rgba(255, 255, 255, 0.97); /* Fond légèrement transparent */
         box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1); /* Ombre à gauche */
+        width: 85%; /* Réduire légèrement la largeur pour un meilleur design */
+        right: -85%; /* Ajuster la position initiale */
     }
     
     .nav-links.active {
@@ -892,6 +894,8 @@ footer {
         height: calc(100vh - 80px) !important; /* Forcer la hauteur correcte */
         overflow-y: auto !important; /* Assurer le défilement si nécessaire */
         will-change: transform; /* Optimisation des performances */
+        overscroll-behavior: contain; /* Empêcher le scroll de se propager */
+        -webkit-overflow-scrolling: touch; /* Défilement fluide sur iOS */
     }
     
     .nav-links a {
@@ -910,6 +914,41 @@ footer {
         transform: translateX(5px); /* Effet de décalage au survol */
     }
     
+    /* Optimisation pour les images */
+    img {
+        max-width: 100%;
+        height: auto !important;
+    }
+    
+    /* Optimisations pour le contenu */
+    .hommage-content, 
+    .mission-content, 
+    .actualites-content, 
+    .ressources-content {
+        padding: 0 1rem;
+    }
+    
+    .portrait img {
+        width: 90%;
+        margin: 0 auto 1.5rem;
+    }
+    
+    /* Amélioration pour l'espacement */
+    section {
+        padding: 2.5rem 0.5rem;
+    }
+    
+    section h2 {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Meilleures transitions pour le menu */
+    .burger div {
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                    opacity 0.2s ease;
+    }
+    
     /* Élargir la zone cliquable du burger */
     .burger {
         padding: 15px;
@@ -923,24 +962,75 @@ footer {
         margin-top: 80px;
     }
     
-    /* Style pour le bouton de fermeture en mode portrait */
-    .menu-close-btn {
-        top: 15px;
-        right: 15px;
-        width: 45px;
-        height: 45px;
-        font-size: 1.7rem;
+    /* Optimisation du footer sur mobile */
+    .footer-section {
+        padding: 1rem 0.5rem;
+    }
+    
+    .social-links {
+        flex-wrap: wrap;
+        justify-content: space-around;
     }
 }
 
-@media screen and (orientation: landscape) and (max-width: 1024px) {
-    /* ... existing code ... */
+/* Optimisations supplémentaires pour les très petits écrans */
+@media screen and (max-width: 320px) {
+    .logo h1 {
+        font-size: 1.4rem;
+    }
     
+    .logo p {
+        font-size: 0.7rem;
+    }
+    
+    .logo-img {
+        height: 40px;
+    }
+    
+    .nav-links a {
+        font-size: 1.1rem;
+        padding: 12px 15px;
+    }
+    
+    .hero-content h1 {
+        font-size: 1.6rem;
+    }
+    
+    .hero-content .subtitle {
+        font-size: 1rem;
+    }
+    
+    section h2 {
+        font-size: 1.4rem;
+    }
+    
+    .mission-item,
+    .actualite-card,
+    .ressource-categorie {
+        padding: 1rem;
+    }
+    
+    .mission-item h3,
+    .actualite-card h3,
+    .ressource-categorie h3 {
+        font-size: 1.1rem;
+    }
+    
+    .mission-item p,
+    .actualite-card p,
+    .ressource-categorie p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Optimisations pour le mode paysage sur mobile */
+@media screen and (orientation: landscape) and (max-width: 1024px) {
+    /* Ajustements pour le mode paysage */
     .nav-links {
-        /* Ajustement spécifique pour le mode paysage */
         padding: 1rem;
         max-height: calc(100vh - 60px);
         top: 60px;
+        overflow-y: auto;
     }
     
     .nav-links li {
@@ -949,6 +1039,40 @@ footer {
     
     .nav-links a {
         padding: 8px 12px;
+        min-height: 40px;
+    }
+    
+    /* Réduire la hauteur de certains éléments pour éviter le défilement excessif */
+    .hero {
+        min-height: auto;
+        padding: 2rem 1rem;
+    }
+    
+    /* Ajuster la taille des sections pour qu'elles tiennent dans la hauteur limitée */
+    section {
+        padding: 1.5rem 1rem;
+    }
+    
+    /* Optimiser la disposition des grilles */
+    .mission-content,
+    .actualites-content,
+    .ressources-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    /* Réduire la taille des éléments pour qu'ils tiennent mieux à l'écran */
+    .mission-item, 
+    .actualite-card, 
+    .ressource-categorie {
+        padding: 1rem;
+    }
+    
+    /* Optimiser la gestion du menu */
+    body.menu-open {
+        position: fixed;
+        width: 100%;
+        height: 100%;
     }
 }
 
@@ -1038,32 +1162,40 @@ footer {
     }
 }
 
-/* Styles pour le bouton de fermeture du menu */
-.menu-close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 1.5rem;
-    color: var(--primary-color);
-    cursor: pointer;
-    padding: 10px;
-    z-index: 1001;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
+/* Classes spéciales pour les appareils tactiles */
+.touch-device .nav-links a,
+.touch-device .burger,
+.touch-device .social-link,
+.touch-device .resource-item,
+.touch-device .actualite-card,
+.touch-device .mission-item {
+    /* Augmenter la zone de tap sur les éléments interactifs */
+    min-height: 44px;  /* Recommandation de Apple pour les zones tactiles */
 }
 
-.menu-close-btn:hover {
-    background-color: rgba(255, 255, 255, 1);
-    transform: scale(1.1);
+.touch-device .nav-links a:hover {
+    /* Désactiver les effets hover qui peuvent causer des problèmes sur mobile */
+    transform: none;
 }
 
-.menu-close-btn:active {
-    transform: scale(0.95);
+.touch-device .nav-links a:active {
+    /* Ajouter un effet de feedback tactile */
+    background-color: rgba(52, 152, 219, 0.15);
+    transform: translateX(3px);
+    transition: transform 0.1s ease, background-color 0.3s ease;
+}
+
+/* Optimisations de performance */
+img, video, canvas, svg {
+    will-change: transform; /* Optimiser les animations liées à ces éléments */
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        /* Respecter la préférence de l'utilisateur pour réduire les animations */
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 } 

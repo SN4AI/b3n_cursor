@@ -2,7 +2,10 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Bibliothèque Numérique Ndiaga NDIAYE - B3N</title>
     <!-- Optimisation SEO -->
     <meta name="description" content="Bibliothèque Numérique Ndiaga NDIAYE - B3N : Perpétuer la lumière du savoir, honorer la vision d'un éducateur hors pair">
@@ -43,19 +46,19 @@
         <nav>
             <div class="logo">
                 <div class="logo-content">
-                    <img src="images/logo.png" alt="Logo B3N" class="logo-img" width="60" height="60">
+                    <img src="images/logo.png" alt="Logo B3N" class="logo-img" width="60" height="60" fetchpriority="high">
                     <h1>B3N</h1>
                 </div>
                 <p>Bibliothèque Numérique Ndiaga NDIAYE</p>
             </div>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Accueil</a></li>
-                <li><a href="bibliotheque.html">Bibliothèque</a></li>
-                <li><a href="galerie.html">Galerie</a></li>
-                <li><a href="projet-xam-xamle.html">Projet XAM XAMLÉ</a></li>
-                <li><a href="a-propos.html">À Propos</a></li>
+            <ul class="nav-links" role="menu">
+                <li role="menuitem"><a href="index.html" class="active">Accueil</a></li>
+                <li role="menuitem"><a href="bibliotheque.html">Bibliothèque</a></li>
+                <li role="menuitem"><a href="galerie.html">Galerie</a></li>
+                <li role="menuitem"><a href="projet-xam-xamle.html">Projet XAM XAMLÉ</a></li>
+                <li role="menuitem"><a href="a-propos.html">À Propos</a></li>
             </ul>
-            <div class="burger" id="burger-menu">
+            <div class="burger" id="burger-menu" role="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
                 <div class="line1"></div>
                 <div class="line2"></div>
                 <div class="line3"></div>
@@ -63,7 +66,7 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main-content">
         <section class="hero">
             <div class="hero-content">
                 <h1>Bibliothèque Numérique Ndiaga NDIAYE - B3N</h1>
@@ -80,31 +83,31 @@
                 </div>
                 <div class="biographie">
                     <div class="biographie-section">
-                        <i class="fas fa-graduation-cap"></i>
+                        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
                         <h3>Pédagogue Visionnaire</h3>
                         <p>Natif de Ouakam, cœur battant de la région de Dakar, le Professeur Ndiaga NDIAYE incarnait l'excellence académique sénégalaise. Maître de conférences émérite au Département de Gestion de l'École Supérieure Polytechnique (ESP) de Dakar, il forgea pendant trois décennies les esprits de milliers d'étudiants, leur inculquant autant les savoirs managériaux que les valeurs d'éthique professionnelle.</p>
                     </div>
 
                     <div class="biographie-section">
-                        <i class="fas fa-lightbulb"></i>
+                        <i class="fas fa-lightbulb" aria-hidden="true"></i>
                         <h3>Architecte du Savoir</h3>
                         <p>Pionnier de la pédagogie active, son approche novatrice révolutionna l'enseignement des sciences de gestion en Afrique francophone. Ses travaux sur l'audit institutionnel et le management des PME africaines font aujourd'hui référence, tandis que ses anciens élèves dirigent des institutions financières, des ministères et des entreprises panafricaines.</p>
                     </div>
 
                     <div class="biographie-section">
-                        <i class="fas fa-hands-helping"></i>
+                        <i class="fas fa-hands-helping" aria-hidden="true"></i>
                         <h3>Pilier Communautaire</h3>
                         <p>À Ouakam, son engagement transcenda les amphithéâtres. Fondateur du Cercle d'Études Économiques de Ouakam, il initia des programmes d'alphabétisation financière et devint le mentor générationnel du quartier, surnommé affectueusement "Ndiaga Léer" (Ndiaga la lumière) pour sa capacité à éclairer les parcours professionnels.</p>
                     </div>
 
                     <div class="biographie-section">
-                        <i class="fas fa-book"></i>
+                        <i class="fas fa-book" aria-hidden="true"></i>
                         <h3>Héritage Intellectuel</h3>
                         <p>Disparu le 25 octobre 2024, le Professeur NDIAYE laisse une œuvre intellectuelle considérable et une méthodologie pédagogique adoptée par plusieurs universités africaines. Cette bibliothèque numérique, baptisée en son honneur, incarne son credo : "Le savoir ne vaut que partagé, l'éducation est l'arme absolue contre la pauvreté."</p>
                     </div>
 
                     <div class="citation">
-                        <i class="fas fa-quote-left"></i>
+                        <i class="fas fa-quote-left" aria-hidden="true"></i>
                         <p>"Celui qui enseigne, bâtit des cathédrales invisibles dans l'esprit des hommes."</p>
                     </div>
                 </div>
@@ -233,6 +236,64 @@
                     });
             });
         }
+        
+        // Fonction de chargement différé des ressources non critiques
+        window.addEventListener('load', function() {
+            // Charger les images en arrière-plan
+            const lazyImages = [].slice.call(document.querySelectorAll("img[loading='lazy']"));
+            
+            if ("IntersectionObserver" in window) {
+                let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            let lazyImage = entry.target;
+                            lazyImage.src = lazyImage.dataset.src || lazyImage.src;
+                            lazyImageObserver.unobserve(lazyImage);
+                        }
+                    });
+                });
+                
+                lazyImages.forEach(function(lazyImage) {
+                    lazyImageObserver.observe(lazyImage);
+                });
+            } else {
+                // Fallback pour les navigateurs qui ne supportent pas IntersectionObserver
+                let active = false;
+                
+                const lazyLoad = function() {
+                    if (active === false) {
+                        active = true;
+                        
+                        setTimeout(function() {
+                            lazyImages.forEach(function(lazyImage) {
+                                if ((lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0) && getComputedStyle(lazyImage).display !== "none") {
+                                    lazyImage.src = lazyImage.dataset.src || lazyImage.src;
+                                    lazyImages = lazyImages.filter(function(image) { return image !== lazyImage; });
+                                    
+                                    if (lazyImages.length === 0) {
+                                        document.removeEventListener("scroll", lazyLoad);
+                                        window.removeEventListener("resize", lazyLoad);
+                                        window.removeEventListener("orientationchange", lazyLoad);
+                                    }
+                                }
+                            });
+                            
+                            active = false;
+                        }, 200);
+                    }
+                };
+                
+                document.addEventListener("scroll", lazyLoad);
+                window.addEventListener("resize", lazyLoad);
+                window.addEventListener("orientationchange", lazyLoad);
+                window.addEventListener("DOMContentLoaded", lazyLoad);
+            }
+            
+            // Optimisation tactile pour les appareils mobiles
+            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+                document.body.classList.add('touch-device');
+            }
+        });
     </script>
 </body>
 </html> 
