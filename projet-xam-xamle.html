@@ -298,6 +298,197 @@
             }
         }
         
+        /* Styles pour la section Olympiade */
+        .olympiade-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .olympiade-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color), var(--primary-color));
+        }
+
+        .olympiade-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .olympiade-header h2 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .olympiade-header h3 {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .olympiade-date {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            font-weight: 500;
+            background: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .olympiade-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .olympiade-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            transition: transform 0.3s var(--transition-function);
+        }
+
+        .olympiade-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .olympiade-card h4 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .olympiade-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+            text-align: justify;
+            margin-bottom: 1rem;
+        }
+
+        .olympiade-objectives {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .objective-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s var(--transition-function);
+        }
+
+        .objective-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .objective-card h4 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .objective-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+            text-align: justify;
+        }
+
+        .objectives-list {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s var(--transition-function);
+        }
+
+        .objectives-list:hover {
+            transform: translateY(-5px);
+        }
+
+        .objectives-list h4 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .objectives-list ul {
+            padding-left: 1.5rem;
+        }
+
+        .objectives-list li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 0.5rem;
+        }
+
+        .objectives-list li::before {
+            content: "•";
+            color: var(--secondary-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        /* Responsive pour la section Olympiade */
+        @media screen and (max-width: 768px) {
+            .olympiade-objectives {
+                grid-template-columns: 1fr;
+            }
+
+            .olympiade-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .olympiade-header h3 {
+                font-size: 1.3rem;
+            }
+
+            .olympiade-section {
+                padding: 2rem 1rem;
+            }
+
+            .olympiade-card,
+            .objective-card,
+            .objectives-list {
+                padding: 1.5rem;
+            }
+        }
+
         /* Amélioration pour l'orientation paysage */
         @media screen and (orientation: landscape) and (max-width: 1024px) {
             .welcome-image-container {
@@ -437,6 +628,40 @@
                             <i class="fas fa-trophy feature-icon"></i>
                             <h3>Compétitions</h3>
                             <p>Organisation de concours scientifiques</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section Olympiade en Mathématiques -->
+                <div class="olympiade-section section-animate">
+                    <div class="olympiade-header">
+                        <h2><i class="fas fa-medal"></i> Olympiade en Mathématiques</h2>
+                        <h3>Prix Mathématique Professeur Ndiaga Ndiaye</h3>
+                        <p class="olympiade-date">Juillet 2025 – Commune de Ouakam</p>
+                    </div>
+
+                    <div class="olympiade-content">
+                        <div class="olympiade-card">
+                            <h4><i class="fas fa-info-circle"></i> Contexte et Justification</h4>
+                            <p>Dans la continuité des actions menées dans le cadre du Projet XAM XAMLÉ, initiative portée par la Jeunesse Patriotique du Sénégal – JPS Ouakam en partenariat avec l'Association les Amis de la Bibliothèque Issa Samb – AABIS, nous lançons la 1ère Édition de l'Olympiade en Mathématiques de Ouakam.</p>
+                            <p>Le projet XAM XAMLÉ vise à renforcer les capacités des élèves du moyen et secondaire, notamment ceux en classe d'examen, à travers des plateformes numériques et des actions de proximité. Cette olympiade s'inscrit dans cette dynamique, avec l'ambition de stimuler l'intérêt pour les sciences, particulièrement les mathématiques, discipline fondatrice de toute démarche scientifique rigoureuse.</p>
+                        </div>
+
+                        <div class="olympiade-objectives">
+                            <div class="objective-card">
+                                <h4><i class="fas fa-bullseye"></i> Objectif Principal</h4>
+                                <p>Stimuler la réflexion, la créativité et la résolution de problèmes mathématiques en dehors du cadre scolaire classique, en créant un espace compétitif et stimulant.</p>
+                            </div>
+
+                            <div class="objectives-list">
+                                <h4><i class="fas fa-list-check"></i> Objectifs Spécifiques</h4>
+                                <ul>
+                                    <li>Identifier et valoriser les talents mathématiques locaux dans la commune de Ouakam.</li>
+                                    <li>Encourager les élèves à développer une approche autonome et ludique de l'apprentissage des mathématiques.</li>
+                                    <li>Établir une dynamique de compétitivité constructive en matière scientifique entre les écoles de la commune.</li>
+                                    <li>Renforcer le positionnement du projet XAM XAMLÉ comme levier d'excellence éducative et d'innovation pédagogique.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
