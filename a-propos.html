@@ -214,6 +214,189 @@
             }
         }
         
+        /* Styles pour la section Remerciements */
+        .thanks-section {
+            margin-top: 3rem;
+        }
+
+        .thanks-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .thanks-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            transition: transform 0.3s var(--transition-function);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thanks-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color), var(--primary-color));
+        }
+
+        .thanks-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .thanks-photo-container {
+            flex-shrink: 0;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .thanks-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--secondary-color);
+            transition: transform 0.3s var(--transition-function);
+        }
+
+        .thanks-card:hover .thanks-photo {
+            transform: scale(1.05);
+        }
+
+        .thanks-photo-info {
+            text-align: center;
+            max-width: 200px;
+        }
+
+        .thanks-photo-info h4 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .thanks-photo-info p {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin: 0;
+            font-style: italic;
+        }
+
+        .photo-placeholder {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px dashed var(--secondary-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--secondary-color);
+            transition: all 0.3s var(--transition-function);
+        }
+
+        .thanks-card:hover .photo-placeholder {
+            border-color: var(--accent-color);
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+
+        .photo-placeholder i {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .photo-placeholder p {
+            font-size: 0.9rem;
+            text-align: center;
+            margin: 0;
+        }
+
+        .thanks-text {
+            flex: 1;
+        }
+
+        .thanks-text h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .thanks-text h3::before {
+            content: "👤";
+            font-size: 1.2rem;
+        }
+
+        .thanks-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+            text-align: justify;
+            margin-bottom: 1rem;
+        }
+
+        .thanks-text p:last-child {
+            margin-bottom: 0;
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
+        /* Responsive pour la section Remerciements */
+        @media screen and (max-width: 768px) {
+            .thanks-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+            }
+
+            .thanks-photo-container {
+                margin: 0 auto 1.5rem;
+            }
+
+            .thanks-text h3 {
+                justify-content: center;
+            }
+
+            .thanks-photo-info {
+                margin-top: 0.5rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .thanks-card {
+                padding: 1.5rem;
+            }
+
+            .thanks-photo,
+            .photo-placeholder {
+                width: 120px;
+                height: 120px;
+            }
+
+            .thanks-text h3 {
+                font-size: 1.3rem;
+            }
+
+            .thanks-text p {
+                font-size: 1rem;
+            }
+        }
+
         /* Amélioration pour l'orientation paysage */
         @media screen and (orientation: landscape) and (max-width: 1024px) {
             .welcome-image-container {
@@ -320,6 +503,27 @@
                             <h3 class="member-name">Ousmane Sy BODIAN</h3>
                             <p class="member-role">Chargé de Communication de la JPS OUAKAM</p>
                             <p>Spécialiste en communication et relations publiques, Ousmane Sy BODIAN assure la visibilité et la promotion des initiatives éducatives de la JPS OUAKAM auprès de la communauté.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section Remerciements -->
+                <div class="thanks-section">
+                    <h2><i class="fas fa-heart"></i> Remerciements</h2>
+                    <div class="thanks-content">
+                        <div class="thanks-card">
+                            <div class="thanks-photo-container">
+                                <img src="images/amadian-diallo.PNG" alt="Monsieur Amadian DIALLO" class="thanks-photo">
+                                <div class="thanks-photo-info">
+                                    <h4>Amadian DIALLO</h4>
+                                    <p>Enseignant et Directeur Général de l'école maternelle élémentaire Yaa TOUTY</p>
+                                </div>
+                            </div>
+                            <div class="thanks-text">
+                                <h3>Monsieur Amadian DIALLO</h3>
+                                <p>Nous exprimons notre profonde gratitude à Monsieur Amadian DIALLO pour sa contribution précieuse à l'enrichissement de cette bibliothèque numérique. Grâce à sa générosité et à son engagement en faveur du partage du savoir, il nous a gracieusement mis à disposition un volume important de ressources documentaires, représentant plus de 5 Go de documents soigneusement collectés et organisés. Ces documents, couvrant des domaines variés et essentiels, ont grandement contribué à constituer la base de cette bibliothèque, destinée à être un espace d'accès libre à la connaissance pour tous.</p>
+                                <p>Son geste, à la fois altruiste et visionnaire, illustre parfaitement les valeurs de solidarité intellectuelle et de transmission que nous souhaitons promouvoir à travers ce projet.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
