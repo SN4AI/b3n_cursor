@@ -7,10 +7,12 @@ desktop.ini
 *.tmp
 *.temp
 *.log
+~$*
 
 # Fichiers de cache
 .cache/
 *.cache
+.temp/
 
 # Fichiers de build
 dist/
@@ -21,12 +23,15 @@ out/
 .env
 .env.local
 .env.production
+.env.*.local
 
-# Fichiers de dépendances (si applicable)
+# Fichiers de dépendances
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
+bower_components/
 
 # Fichiers d'éditeur
 .vscode/
@@ -47,4 +52,4 @@ yarn-error.log*
 # Fichiers de base de données
 *.db
 *.sqlite
-*.sqlite3 
+*.sqlite3
