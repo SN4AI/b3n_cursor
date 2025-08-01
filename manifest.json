@@ -1,0 +1,46 @@
+{
+  "name": "Bibliothèque Numérique Ndiaga NDIAYE - B3N",
+  "short_name": "B3N",
+  "description": "Perpétuer la lumière du savoir, honorer la vision d'un éducateur hors pair.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2c3e50",
+  "icons": [
+    {
+      "src": "images/app-icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/app-icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "orientation": "any",
+  "categories": ["education", "books", "learning"],
+  "lang": "fr-FR",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Bibliothèque",
+      "short_name": "Bibliothèque",
+      "description": "Accéder à la bibliothèque de ressources",
+      "url": "/bibliotheque.html",
+      "icons": [{ "src": "images/app-icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Projet XAM XAMLÉ",
+      "short_name": "XAM XAMLÉ",
+      "description": "Découvrir le projet XAM XAMLÉ",
+      "url": "/projet-xam-xamle.html",
+      "icons": [{ "src": "images/app-icons/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+} 

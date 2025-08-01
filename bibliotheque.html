@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliothèque - B3N</title>
+    <!-- Optimisation SEO -->
+    <meta name="description" content="Explorez les ressources de la Bibliothèque Numérique Ndiaga NDIAYE - B3N : livres, documents et ressources éducatives.">
+    <meta name="keywords" content="bibliothèque numérique, ressources éducatives, Ndiaga NDIAYE, Ouakam, éducation, Sénégal, JPS OUAKAM">
+    <!-- Préchargement des ressources critiques -->
+    <link rel="preload" href="styles.min.css" as="style">
+    <link rel="preload" href="animations.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <!-- PWA support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c3e50">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.min.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .categories {
+            padding: 4rem 2rem;
+            background-color: var(--light-bg);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s var(--transition-function);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s var(--transition-function);
+            z-index: 1;
+        }
+
+        .category-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            transition: color 0.3s var(--transition-function);
+        }
+
+        .category-card:hover h3 {
+            color: var(--secondary-color);
+        }
+
+        .category-card p {
+            margin-bottom: 1.5rem;
+        }
+
+        .category-link {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s var(--transition-function);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .category-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s var(--transition-function);
+            z-index: -1;
+        }
+
+        .category-link:hover::before {
+            transform: translateX(100%);
+        }
+
+        .category-link:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            transition: transform 0.5s var(--transition-function), 
+                        color 0.5s var(--transition-function);
+            display: block;
+        }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.2) rotate(5deg);
+            color: var(--accent-color);
+        }
+        
+        .search-bar {
+            display: flex;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid var(--light-bg);
+            border-radius: 30px 0 0 30px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .search-bar input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52,152,219,0.2);
+        }
+        
+        .search-bar button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            padding: 12px 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .search-bar button:hover {
+            background-color: var(--accent-color);
+        }
+        
+        /* Filtres */
+        .filters {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            padding: 0 2rem;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .filter-button {
+            background-color: var(--white);
+            color: var(--primary-color);
+            border: 2px solid var(--light-bg);
+            border-radius: 20px;
+            padding: 8px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-button:hover, .filter-button.active {
+            background-color: var(--secondary-color);
+            color: var(--white);
+            border-color: var(--secondary-color);
+        }
+        
+        /* Styles pour l'image d'accueil */
+        .welcome-image-container {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 1.2s ease-out;
+        }
+        
+        .welcome-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.8s var(--transition-function);
+            transform-origin: center;
+        }
+        
+        .welcome-image-container:hover .welcome-image {
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animation de chargement de page -->
+    <div class="page-transition">
+        <div class="loader"></div>
+    </div>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-content">
+                    <img src="images/logo.png" alt="Logo B3N" class="logo-img" width="60" height="60">
+                <h1>B3N</h1>
+                </div>
+                <p>Bibliothèque Numérique Ndiaga NDIAYE</p>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="bibliotheque.html" class="active">Bibliothèque</a></li>
+                <li><a href="projet-xam-xamle.html">Projet XAM XAMLÉ</a></li>
+                <li><a href="a-propos.html">À Propos</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Notre Bibliothèque</h1>
+                <p class="subtitle">Explorez nos différentes catégories de ressources</p>
+            </div>
+        </section>
+
+        <!-- Image d'accueil de la bibliothèque -->
+        <div class="welcome-image-container section-animate">
+            <img src="images/page.jpg" alt="Bienvenue à la bibliothèque" class="welcome-image">
+        </div>
+
+        <!-- Ajout d'une barre de recherche -->
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Rechercher des ressources..." aria-label="Rechercher">
+            <button type="button" id="search-button"><i class="fas fa-search"></i></button>
+        </div>
+        
+        <!-- Ajout de filtres pour faciliter la navigation -->
+        <div class="filters">
+            <div class="filter-buttons">
+                <button class="filter-button active" data-filter="tous">Tous</button>
+                <button class="filter-button" data-filter="academique">Académique</button>
+                <button class="filter-button" data-filter="specialise">Spécialisé</button>
+                <button class="filter-button" data-filter="formations">Formations</button>
+                <button class="filter-button" data-filter="documents">Documents</button>
+                <button class="filter-button" data-filter="langues">Langues</button>
+            </div>
+        </div>
+
+        <section class="categories section-animate">
+            <div class="categories-grid">
+                <!-- Catégories académiques -->
+                <div class="category-card" data-category="academique formations">
+                    <i class="fas fa-calculator category-icon"></i>
+                    <h3>Mathématiques</h3>
+                    <p>Cours, exercices et ressources mathématiques pour tous les niveaux, du collège à l'université.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="academique formations">
+                    <i class="fas fa-flask category-icon"></i>
+                    <h3>Sciences</h3>
+                    <p>Ressources en sciences physiques, chimie, biologie et sciences de la vie et de la terre.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="academique langues">
+                    <i class="fas fa-language category-icon"></i>
+                    <h3>Français</h3>
+                    <p>Grammaire, littérature française, expression écrite et orale pour tous les niveaux.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="academique langues">
+                    <i class="fas fa-globe category-icon"></i>
+                    <h3>Anglais</h3>
+                    <p>Ressources pour l'apprentissage de l'anglais : grammaire, vocabulaire, compréhension.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="academique">
+                    <i class="fas fa-landmark category-icon"></i>
+                    <h3>Histoire-Géographie</h3>
+                    <p>Cours d'histoire et géographie, cartes, documents historiques et ressources pédagogiques.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="academique">
+                    <i class="fas fa-brain category-icon"></i>
+                    <h3>Philosophie</h3>
+                    <p>Textes philosophiques, cours de philosophie et ressources pour la réflexion critique.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="academique">
+                    <i class="fas fa-balance-scale category-icon"></i>
+                    <h3>Droit</h3>
+                    <p>Textes de loi, cours de droit, jurisprudence et ressources juridiques.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="academique">
+                    <i class="fas fa-chart-line category-icon"></i>
+                    <h3>Économie-Politique</h3>
+                    <p>Ressources en économie, sciences politiques et analyse des politiques publiques.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <!-- Catégories spécialisées -->
+                <div class="category-card" data-category="specialise">
+                    <i class="fas fa-book-open category-icon"></i>
+                    <h3>Littérature Africaine</h3>
+                    <p>Œuvres littéraires africaines, auteurs du continent et patrimoine culturel africain.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="specialise">
+                    <i class="fas fa-book category-icon"></i>
+                    <h3>Littérature Française</h3>
+                    <p>Classiques de la littérature française, auteurs contemporains et analyse littéraire.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="specialise formations">
+                    <i class="fas fa-laptop-code category-icon"></i>
+                    <h3>Informatique</h3>
+                    <p>Programmation, développement web, bases de données et technologies informatiques.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="specialise">
+                    <i class="fas fa-briefcase category-icon"></i>
+                    <h3>Développer son Business</h3>
+                    <p>Entrepreneuriat, gestion d'entreprise, marketing et stratégies commerciales.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="specialise">
+                    <i class="fas fa-user-graduate category-icon"></i>
+                    <h3>Développement Personnel</h3>
+                    <p>Leadership, motivation, gestion du temps et épanouissement personnel.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="specialise">
+                    <i class="fas fa-trophy category-icon"></i>
+                    <h3>Concours</h3>
+                    <p>Préparation aux concours administratifs, examens nationaux et compétitions.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="specialise">
+                    <i class="fas fa-microphone category-icon"></i>
+                    <h3>Bien Parler en Public</h3>
+                    <p>Techniques de communication, art oratoire et prise de parole en public.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="specialise">
+                    <i class="fas fa-seedling category-icon"></i>
+                    <h3>Agriculture</h3>
+                    <p>Techniques agricoles, agroécologie, développement rural et sécurité alimentaire.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="specialise">
+                    <i class="fas fa-calculator category-icon"></i>
+                    <h3>Comptabilité</h3>
+                    <p>Comptabilité générale, analyse financière, fiscalité et gestion comptable.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="formations">
+                    <i class="fas fa-graduation-cap category-icon"></i>
+                    <h3>Formations</h3>
+                    <p>Modules de formation, cours spécialisés et programmes d'apprentissage.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="documents">
+                    <i class="fas fa-file-alt category-icon"></i>
+                    <h3>Fascicules</h3>
+                    <p>Fascicules d'exercices, cahiers de travaux pratiques et supports pédagogiques.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="documents">
+                    <i class="fas fa-chalkboard-teacher category-icon"></i>
+                    <h3>Exposés</h3>
+                    <p>Présentations, exposés et supports de cours pour différents sujets.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="documents">
+                    <i class="fas fa-clipboard-check category-icon"></i>
+                    <h3>Évaluations</h3>
+                    <p>Devoirs, examens, épreuves et outils d'évaluation pour tous les niveaux.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="documents">
+                    <i class="fas fa-file-contract category-icon"></i>
+                    <h3>Documents Administratifs</h3>
+                    <p>Formulaires administratifs, procédures et documents officiels.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="documents">
+                    <i class="fas fa-file-invoice-dollar category-icon"></i>
+                    <h3>Rapport d'Audit</h3>
+                    <p>Rapports d'audit, analyses financières et documents de contrôle.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="specialise">
+                    <i class="fas fa-pray category-icon"></i>
+                    <h3>Religion</h3>
+                    <p>Textes religieux, études théologiques et ressources spirituelles.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="langues">
+                    <i class="fas fa-language category-icon"></i>
+                    <h3>Langues</h3>
+                    <p>Ressources pour l'apprentissage de différentes langues étrangères.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="documents">
+                    <i class="fas fa-ellipsis-h category-icon"></i>
+                    <h3>Autres</h3>
+                    <p>Diverses ressources complémentaires couvrant d'autres domaines d'intérêt.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card" data-category="documents">
+                    <i class="fas fa-folder-open category-icon"></i>
+                    <h3>Autres Documents</h3>
+                    <p>Documents divers, archives et ressources supplémentaires de la bibliothèque.</p>
+                    <a href="https://drive.google.com/drive/folders/1CFJ0sIUsFLFplg6uewuYbEDHCz1mCFnT?usp=drive_link" class="category-link" target="_blank">Accéder <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <div class="ending-banner section-animate">
+            <img src="images/beging.png" alt="Beging" class="ending-image" loading="lazy">
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Partenaires</h3>
+                <p>JPS OUAKAM</p>
+                <p>Association AABIS</p>
+                <p>Bibliothèque Issa Samb de Ouakam</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> Email: jpsouakam@gmail.com</p>
+                <p><i class="fas fa-phone"></i> Téléphone: +221 76 145 96 87 | +221 77 201 00 15</p>
+                <p><i class="fas fa-map-marker-alt"></i> Adresse: Ouakam, Dakar, Sénégal</p>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <div class="social-follow">
+                    <a href="https://www.facebook.com/profile.php?id=61570152758917&sk=about" target="_blank" class="social-link">
+                        <i class="fab fa-facebook"></i>
+                        <span>Suivez-nous sur Facebook</span>
+                    </a>
+                    <a href="https://www.youtube.com/@jpsouakam" target="_blank" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                        <span>Suivez-nous sur YouTube</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Bibliothèque Numérique Ndiaga NDIAYE - B3N. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Bouton retour en haut -->
+    <div id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script src="script.js" defer></script>
+    <script>
+        // Script spécifique à la page bibliothèque
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filtrage des catégories
+            const filterButtons = document.querySelectorAll('.filter-button');
+            const categoryCards = document.querySelectorAll('.category-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Gestion de la classe active
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    categoryCards.forEach(card => {
+                        if (filter === 'tous') {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 100);
+                        } else {
+                            if (card.getAttribute('data-category').includes(filter)) {
+                                card.style.display = 'block';
+                                setTimeout(() => {
+                                    card.style.opacity = '1';
+                                    card.style.transform = 'translateY(0)';
+                                }, 100);
+                            } else {
+                                card.style.opacity = '0';
+                                card.style.transform = 'translateY(20px)';
+                                setTimeout(() => {
+                                    card.style.display = 'none';
+                                }, 300);
+                            }
+                        }
+                    });
+                });
+            });
+            
+            // Recherche
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+            
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+                
+                categoryCards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const description = card.querySelector('p').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 100);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            }
+            
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // Animation des cartes au survol
+            categoryCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                    const icon = this.querySelector('.category-icon');
+                    if (icon) {
+                        icon.style.transform = 'scale(1.2) rotate(5deg)';
+                        icon.style.color = 'var(--accent-color)';
+                    }
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                    const icon = this.querySelector('.category-icon');
+                    if (icon) {
+                        icon.style.transform = '';
+                        icon.style.color = '';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

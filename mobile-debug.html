@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Débogage Mobile - B3N</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        #debug-output {
+            padding: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            min-height: 200px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+        
+        button {
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .test-area {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px dashed #aaa;
+            border-radius: 5px;
+        }
+        
+        .burger-test {
+            width: 30px;
+            height: 24px;
+            cursor: pointer;
+            position: relative;
+            margin: 20px auto;
+        }
+        
+        .burger-test div {
+            width: 30px;
+            height: 3px;
+            background-color: #333;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <h1>Outil de débogage pour le menu mobile</h1>
+    
+    <div id="debug-output">Logs de débogage apparaîtront ici...</div>
+    
+    <button id="clear-log">Effacer les logs</button>
+    <button id="check-menu">Vérifier l'état du menu</button>
+    
+    <div class="test-area">
+        <h2>Test du burger menu</h2>
+        <div class="burger-test" id="test-burger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <p>Cliquez sur l'icône ci-dessus pour tester les événements tactiles</p>
+    </div>
+    
+    <script>
+        // Surcharger console.log pour afficher dans notre div de débogage
+        const originalConsoleLog = console.log;
+        const debugOutput = document.getElementById('debug-output');
+        
+        console.log = function(...args) {
+            originalConsoleLog.apply(console, args);
+            const message = args.map(arg => {
+                if (typeof arg === 'object') {
+                    return JSON.stringify(arg, null, 2);
+                } else {
+                    return String(arg);
+                }
+            }).join(' ');
+            
+            debugOutput.textContent += message + '\n';
+            debugOutput.scrollTop = debugOutput.scrollHeight;
+        };
+        
+        // Bouton pour effacer les logs
+        document.getElementById('clear-log').addEventListener('click', () => {
+            debugOutput.textContent = '';
+            console.log('Logs effacés');
+        });
+        
+        // Bouton pour vérifier l'état du menu
+        document.getElementById('check-menu').addEventListener('click', () => {
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.nav-links');
+            
+            console.log('État du menu:');
+            console.log('- Burger trouvé:', !!burger);
+            console.log('- Nav trouvé:', !!nav);
+            
+            if (nav) {
+                console.log('- Classe active sur nav:', nav.classList.contains('active'));
+                console.log('- Style du nav:', getComputedStyle(nav).right);
+                console.log('- Visibility:', getComputedStyle(nav).visibility);
+                console.log('- Display:', getComputedStyle(nav).display);
+                console.log('- Opacity:', getComputedStyle(nav).opacity);
+            }
+            
+            if (burger) {
+                console.log('- Classe active sur burger:', burger.classList.contains('active'));
+                console.log('- Événements attachés:', burger._events ? 'Oui' : 'Inconnu');
+            }
+        });
+        
+        // Test du burger
+        const testBurger = document.getElementById('test-burger');
+        
+        ['click', 'touchstart', 'touchend'].forEach(eventType => {
+            testBurger.addEventListener(eventType, (e) => {
+                console.log(`Événement ${eventType} détecté sur le burger de test`);
+                e.preventDefault();
+                testBurger.classList.toggle('active');
+            });
+        });
+        
+        // Log la version du navigateur et les infos de l'appareil
+        console.log('Informations sur le navigateur:');
+        console.log('- User Agent:', navigator.userAgent);
+        console.log('- Plateforme:', navigator.platform);
+        console.log('- Largeur de l\'écran:', window.innerWidth);
+        console.log('- Hauteur de l\'écran:', window.innerHeight);
+        console.log('- Orientation:', window.orientation !== undefined ? window.orientation : 'Non disponible');
+        console.log('- Tactile:', 'ontouchstart' in window ? 'Oui' : 'Non');
+    </script>
+</body>
+</html> 

@@ -1,0 +1,50 @@
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Fichiers temporaires
+*.tmp
+*.temp
+*.log
+
+# Fichiers de cache
+.cache/
+*.cache
+
+# Fichiers de build
+dist/
+build/
+out/
+
+# Fichiers d'environnement
+.env
+.env.local
+.env.production
+
+# Fichiers de dépendances (si applicable)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Fichiers d'éditeur
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Fichiers de sauvegarde
+*.bak
+*.backup
+
+# Fichiers de compression
+*.zip
+*.tar.gz
+*.rar
+
+# Fichiers de base de données
+*.db
+*.sqlite
+*.sqlite3 

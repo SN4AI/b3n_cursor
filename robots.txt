@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Autoriser l'accès à toutes les ressources
+Allow: /images/
+Allow: /styles/
+Allow: /script.js
+Allow: /manifest.json
+
+# Sitemap
+Sitemap: https://b3n.sn/sitemap.xml
+
+# Délai entre les requêtes (en secondes)
+Crawl-delay: 1 
